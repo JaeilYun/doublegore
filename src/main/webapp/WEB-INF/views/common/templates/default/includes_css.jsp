@@ -6,6 +6,7 @@
 <link href="${contextRoot}/assets/css/my-custom-styles.css" rel="stylesheet" type="text/css">
 <link href="${contextRoot}/assets/js/plugins/light-gallery/css/lightgallery.css" rel="stylesheet" type="text/css">
 <link href="${contextRoot}/assets/js/plugins/light-gallery/css/lg-transitions.css" rel="stylesheet" type="text/css">
+<link href="${contextRoot}/assets/css/editor.css" rel="stylesheet" type="text/css">
 <!--[if lte IE 9]>
 <link href="${contextRoot}/assets/css/main-ie.css" rel="stylesheet" type="text/css"/>
 <link href="${contextRoot}/assets/css/main-ie-part2.css" rel="stylesheet" type="text/css"/>
