@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="default" template="/WEB-INF/views/common/templates/default/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/common/templates/default/header.jsp"/>
+		<put-attribute name="globals" value="/WEB-INF/views/common/templates/default/globals.jsp"/>
+		<put-attribute name="sidebar" value="/WEB-INF/views/common/templates/default/sidebar.jsp"/>
+		<put-attribute name="includes_css" value="/WEB-INF/views/common/templates/default/includes_css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/common/templates/default/body.jsp"/>
+		<put-attribute name="includes_js" value="/WEB-INF/views/common/templates/default/includes_js.jsp"/>
+	</definition>
+
+	<definition name="dashboard/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/dashboard/{1}.jsp"/>
+	</definition>
+	<definition name="profile/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/profile/{1}.jsp"/>
+	</definition>
+	<definition name="email/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/email/{1}.jsp"/>
+	</definition>
+	<definition name="file/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/file/{1}.jsp"/>
+	</definition>
+	<definition name="calendar/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/calendar/{1}.jsp"/>
+	</definition>
+	<definition name="note/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/note/{1}.jsp"/>
+	</definition>
+</tiles-definitions>
