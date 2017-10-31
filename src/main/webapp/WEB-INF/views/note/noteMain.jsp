@@ -20,48 +20,49 @@
 					</div>
 				</div>
 			</div>
-			<div class="widget" style="border-radius: 4px;">
-				<div class="widget-content" style="margin: -10px 40px 8px 40px;">
-					<h3 style="font-weight: 700;">Password Reset</h3>
-					<div style="font-size: 18px;margin-bottom: 15px;">
-						Hi, Conveniently drive effective methods of empowerment through cross-unit innovation.  ...
+			<div class="noteList">
+				<c:forEach var="list" items="${noteList.content}">
+					<div class="widget" style="border-radius: 4px;">
+						<div class="widget-content" style="margin: -10px 40px 8px 40px;">
+							<h3 style="font-weight: 700;">${list.title }</h3>
+							<%-- <div style="font-size: 18px;margin-bottom: 15px;">
+								${list.contents }
+							</div> --%>
+							<div>
+								<span style="color: #1D92AF;font-weight: 600;">${list.noteCategory.type }</span><span class="timestamp pull-right" style="color: #bbb;">${list.updatedDate }</span>
+							</div>
+						</div>
 					</div>
-					<div>
-						<span style="color: #1D92AF;font-weight: 600;">코딩테스트</span><span class="timestamp pull-right" style="color: #bbb;">3 hours ago</span>
-					</div>
-				</div>
-			</div>
-			<div class="widget" style="border-radius: 4px;">
-				<div class="widget-content" style="margin: -10px 40px 8px 40px;">
-					<h3 style="font-weight: 700;">Password Reset</h3>
-					<div style="font-size: 18px;margin-bottom: 15px;">
-						Hi, Conveniently drive effective methods of empowerment through cross-unit innovation.  ...
-					</div>
-					<div>
-						<span style="color: #1D92AF;font-weight: 600;">코딩테스트</span><span class="timestamp pull-right" style="color: #bbb;">3 hours ago</span>
-					</div>
-				</div>
-			</div>
-			<div class="widget" style="border-radius: 4px;">
-				<div class="widget-content" style="margin: -10px 40px 8px 40px;">
-					<h3 style="font-weight: 700;">Password Reset</h3>
-					<div style="font-size: 18px;margin-bottom: 15px;">
-						Hi, Conveniently drive effective methods of empowerment through cross-unit innovation.  ...
-					</div>
-					<div>
-						<span style="color: #1D92AF;font-weight: 600;">코딩테스트</span><span class="timestamp pull-right" style="color: #bbb;">3 hours ago</span>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div style="text-align: center;">
-				<ul class="pagination borderless" style="font-size: 20px;">
-					<li><a href="#"><i class="i fa fa-angle-left"></i></a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li class="active"><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#"><i class="i fa fa-angle-right"></i></a></li>
+				<ul class="pagination" style="font-size: 20px;">
+					<c:choose>
+						<c:when test="${noteList.hasPrevious() eq 'true'}">
+							<li><a href="#" class="pagingClick" onClick="pagingClick();"><i class="fa fa-chevron-left"></i></a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="disabled"><a href="#" class="pagingClick" onClick="pagingClick();"><i class="fa fa-chevron-left"></i></a></li>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach var="list" items="${noteList.getContent()}" begin="0" end="${(noteList.getTotalPages() < noteList.getNumber()+6) ? noteList.getTotalPages() : noteList.getNumber()+4}" varStatus="idx">
+						<c:choose>
+							<c:when test="${noteList.getNumber()+1 eq idx.count}">  
+								<li class="active"><a href="#" class="pagingClick">${idx.count}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="#" class="pagingClick" onClick="pagingClick(${idx.count-1});">${idx.count}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${noteList.hasNext() eq 'true'}">
+							<li><a href="#" class="pagingClick"  onClick="pagingClick(${noteList.getNumber()+5});"><i class="fa fa-chevron-right"></i></a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="disabled"><a href="#" class="pagingClick"><i class="fa fa-chevron-right"></i></a></li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 		</div>
@@ -99,6 +100,8 @@
 </form>
 
 <form id="mainForm" name="mainForm" method="post" action="/note/main">
+	<input type="hidden" id="page" name="page" value="${noteList.getNumber()}">
+	<input type="hidden" id="size" name="size" value="${noteList.getSize()}">
 </form>
 
 <script>
@@ -188,4 +191,65 @@
 	function removeCategory(val){
 		$(val).parents(".input-group-appendable").remove();
 	}
+	
+	$(".pagingClick").on('click', function(e) {
+		if($(this).closest("li").hasClass("active")) {
+			e.preventDefault();
+		}
+	});
+	
+	pagingClick = function(page) {
+		$.ajax({
+            url: '/note/search',
+            data: {
+                "page" : page,
+                "size" : $("#size").val()
+            },
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (result) {
+        		var noteStr = "";
+        		var pagingStr = "";
+        		$(".noteList").empty();
+        		$(".pagination").empty();
+        		$("#page").val(result.number);
+        		
+        		
+        		for(var i = 0; i < result.content.length; i++){
+        			noteStr += '<div class="widget" style="border-radius: 4px;">';
+        			noteStr += '<div class="widget-content" style="margin: -10px 40px 8px 40px;">';
+        			noteStr += '<h3 style="font-weight: 700;">'+result.content[i].title+'</h3>';
+        			noteStr += '<div>';
+        			noteStr += '<span style="color: #1D92AF;font-weight: 600;">'+result.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+result.content[i].updatedDate+'</span>';
+        			noteStr += '</div></div></div>';
+        		}
+        		$(".noteList").append(noteStr);
+        		
+        		var startPage = (result.number < 5) ? 1 : result.number-3;
+        		var endPage = (result.totalPages < result.number+6) ? result.totalPages : result.number+5;
+        		var prePage = (result.number < 5) ? 0 : result.number-5;
+        		var postPage = (result.totalPages < result.number+6) ? result.totalPages-1 : result.number+5
+
+    			if(result.first == true) {
+    				pagingStr += '<li class="disabled"><a href="#" class="pagingClick"><i class="fa fa-chevron-left"></i></a></li>';
+    			} else {
+    				pagingStr += '<li><a href="#" class="pagingClick" onClick="pagingClick('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
+    			}
+        		for(var i = startPage; i < endPage+1; i++) {
+        			if(i == result.number+1) {
+        				pagingStr += '<li class="active"><a href="#" class="pagingClick"">'+(i)+'</a></li>';
+        			} else {
+        				pagingStr += '<li><a href="#" class="pagingClick" onClick="pagingClick('+(i-1)+');">'+(i)+'</a></li>';
+        			}
+        		}
+        		if(result.last == true) {
+    				pagingStr += '<li class="disabled"><a href="#" class="pagingClick""><i class="fa fa-chevron-right"></i></a></li>';
+    			} else {
+    				pagingStr += '<li><a href="#" class="pagingClick" onClick="pagingClick('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
+    			}
+        		$(".pagination").append(pagingStr);
+            }
+        });
+	}
+
 </script>

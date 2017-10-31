@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NoteFileRepository extends JpaRepository<NoteFileEntity, Long> {
-    NoteFileEntity findBySeq(Long seq);
 }

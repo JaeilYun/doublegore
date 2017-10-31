@@ -1,22 +1,21 @@
 package com.home.contents.note.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +25,8 @@ import com.home.common.annotation.breadcrumb.Breadcrumb;
 import com.home.common.annotation.menu.Menu;
 import com.home.common.types.MenuTypes;
 import com.home.contents.note.entity.NoteCategoryEntity;
+import com.home.contents.note.entity.NoteEntity;
+import com.home.contents.note.entity.NoteForm;
 import com.home.contents.note.service.NoteService;
 
 @Controller
@@ -36,16 +37,21 @@ public class NoteController {
 	@Autowired
 	NoteService noteService;
 
+    @Autowired
+    Environment environment;
+
 	@Menu(type = MenuTypes.NOTE)
 	@Breadcrumb(values = { "note.main" })
 	@RequestMapping(value = "/main")
-	public ModelAndView main() {
+	public ModelAndView main(@RequestParam(value="page", defaultValue="0") String page, @RequestParam(value="size", defaultValue="10") String size) {
 		log.debug("[NoteController] main()");
-		
 		ModelAndView mav = new ModelAndView("note/noteMain");
+		
 		List<NoteCategoryEntity> categoryList = noteService.findNoteCategoryList();
-
+		PageRequest request = new PageRequest(Integer.parseInt(page), Integer.parseInt(size), new Sort(Direction.DESC, "seq"));
+		Page<NoteEntity> noteList = noteService.findNoteAll(request);
 		mav.addObject("categoryList", categoryList);
+		mav.addObject("noteList", noteList);
 		return mav;
 	}
 
@@ -78,55 +84,42 @@ public class NoteController {
 		List<NoteCategoryEntity> noteCategoryEntityList = noteService.updateCategory(strList);
 		return noteCategoryEntityList;
 	}
-
-	//게시글 작성 중 이미지 업로드
-	@RequestMapping(value = "/noteImageUpload", method = RequestMethod.POST)
-	public void uploadImage(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload){
-		log.debug("[NoteController] save note.");
-		OutputStream out = null;
-        PrintWriter printWriter = null;
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
- 
-        try{
- 
-            String fileName = upload.getOriginalFilename();
-            byte[] bytes = upload.getBytes();
-            String uploadPath = "d:/home/doublegore/files/note/image/" + fileName;//저장경로
- 
-            out = new FileOutputStream(new File(uploadPath));
-            out.write(bytes);
-            String callback = request.getParameter("CKEditorFuncNum");
- 
-            printWriter = response.getWriter();
-            String fileUrl = "/files/note/image/" + fileName;//url경로
- 
-            printWriter.println("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
-                    + callback
-                    + ",'"
-                    + fileUrl
-                    + "','이미지를 업로드 하였습니다.'"
-                    + ")</script>");
-            printWriter.flush();
- 
-        }catch(IOException e){
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-                if (printWriter != null) {
-                    printWriter.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
- 
-        return;
-		
-		//	NoteFileEntity uploadedFile = noteService.insertFile(multipartFile);
 	
+	@Menu(type = MenuTypes.NOTE)
+	@Breadcrumb(values = { "note.main" })
+	@RequestMapping(value = "/insertNote")
+	public String insertNote(NoteForm form) {
+		log.debug("[NoteController] insertNote()");
+
+		for(int i = 0; i < 50; i++){
+			noteService.insertNote(form);
+		}
+		return "redirect:/note/main";
+	}
+	
+	@RequestMapping(value = "/imagePopup")
+	public ModelAndView imagePopup() {
+		log.debug("[NoteController] imagePopup()");
+
+		ModelAndView mav = new ModelAndView("note/image/popup");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/imageUpload")
+	public @ResponseBody HashMap<String, Object> imageUpload(@RequestParam("Filedata") MultipartFile multipartFile, HttpSession httpSession) {
+		log.debug("[NoteController] imagePopup()");
+		
+		HashMap<String, Object> fileInfo = noteService.insertFile(multipartFile);
+		return fileInfo; // @ResponseBody 어노테이션을 사용하여 Map을 JSON형태로 반환
+	}
+	
+	@RequestMapping(value = "/search")
+	public @ResponseBody Page<NoteEntity> search(String page, String size) {
+		log.debug("[NoteController] search()");
+		
+		PageRequest request = new PageRequest(Integer.parseInt(page), Integer.parseInt(size), new Sort(Direction.DESC, "seq"));
+		Page<NoteEntity> noteList = noteService.findNoteAll(request);
+		return noteList;
 	}
 }

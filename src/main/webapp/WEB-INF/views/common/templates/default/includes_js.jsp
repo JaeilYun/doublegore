@@ -34,7 +34,6 @@
 <script src="${contextRoot}/assets/js/plugins/moment/moment.min.js"></script>
 <script src="${contextRoot}/assets/js/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 <script src="${contextRoot}/assets/js/plugins/select2/select2.min.js"></script>
-<script src="${contextRoot}/assets/js/editor_loader.js"></script>
 
 
 <%--file--%>

@@ -1,13 +1,24 @@
 package com.home.contents.note.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Entity
@@ -16,9 +27,6 @@ import java.util.Date;
 @Table(name = "note_file")
 public class NoteFileEntity implements Serializable {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1995985557900983386L;
 
 	@Id
@@ -57,7 +65,7 @@ public class NoteFileEntity implements Serializable {
     private String isDeleted;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "note_seq")
-    private NoteEntity noteEntity;
+	@JsonManagedReference
+	@JoinColumn(name = "note_seq")
+	private NoteEntity note = new NoteEntity();
 }
