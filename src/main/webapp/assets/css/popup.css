@@ -27,7 +27,7 @@ dl, dt, dd, ul, ol, li, p { margin:0; padding:0; list-style:none; }
 .alert a { color:#666; text-decoration:none; background:url(../images/icon/editor/b_link.gif?v=2) 100% 50% no-repeat; padding:0 7px 0 0; }
 .alert a:hover { text-decoration:underline; }
 
-.footer { padding:10px 0; /* height:25px; */ background-color:#e9e9e9; clear:both; text-align:center; }
+.footer { padding:10px 0; /* height:25px; */ background-color:#fff; clear:both; text-align:center; }
 .footer ul { margin:0 auto; width:105px; } 
 .footer li {float:left;} 
 .footer li a { display:block; text-indent:-5000px; background:url(../images/icon/editor/pop_footer_btn.gif?v=2) no-repeat; width:49px; height:25px; }

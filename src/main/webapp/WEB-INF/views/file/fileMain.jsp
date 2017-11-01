@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<div class="file-image-view" style="display: none;">
-							<div class="well demo-gallery" style="margin-top: -7px;background-color:#ececec; border: none;padding: 14px;">
+							<div class="well demo-gallery" style="margin-top: -7px;background-color:#fff; border: none;padding: 14px;">
 								<ul id="lightgallery" class="list-unstyled row" style="margin-top: -15px;margin-bottom: -15px;">
 								</ul>
 							</div>

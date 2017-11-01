@@ -49,11 +49,7 @@ public class NoteController {
 		ModelAndView mav = new ModelAndView("note/noteMain");
 		
 		List<NoteCategoryEntity> categoryList = noteService.findNoteCategoryList();
-		PageRequest request = new PageRequest(Integer.parseInt(page), Integer.parseInt(size), new Sort(Direction.DESC, "seq"));
-		Page<NoteEntity> noteList = noteService.findNoteAll(request);
 		mav.addObject("categoryList", categoryList);
-		mav.addObject("noteList", noteList);
-		mav.addObject("end",(noteList.getTotalPages() < noteList.getNumber()+6) ? noteList.getTotalPages() : noteList.getNumber()+4);
 		return mav;
 	}
 

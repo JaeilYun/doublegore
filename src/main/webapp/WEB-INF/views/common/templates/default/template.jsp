@@ -25,7 +25,7 @@
 
 </head>
 
-<body class="ontop-nav topnav-fixed dashboard4">
+<body class="ontop-nav topnav-fixed dashboard4" style="background: #fff !important">
 	<!-- WRAPPER -->
 	<div id="wrapper" class="wrapper" style="padding-top: 100px;">
 	
