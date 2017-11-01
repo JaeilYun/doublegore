@@ -45,7 +45,7 @@
 							<li class="disabled"><a href="#" class="pagingClick" onClick="pagingClick();"><i class="fa fa-chevron-left"></i></a></li>
 						</c:otherwise>
 					</c:choose>
-					<c:forEach var="list" items="${noteList.getContent()}" begin="0" end="${(noteList.getTotalPages() < noteList.getNumber()+6) ? noteList.getTotalPages() : noteList.getNumber()+4}" varStatus="idx">
+					<c:forEach var="list" items="${noteList.getContent()}" begin="0" end="${end}" varStatus="idx">
 						<c:choose>
 							<c:when test="${noteList.getNumber()+1 eq idx.count}">  
 								<li class="active"><a href="#" class="pagingClick">${idx.count}</a></li>
