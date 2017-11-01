@@ -58,12 +58,12 @@ public class NoteEntity implements Serializable{
 	@Column(name = "is_deleted")
 	private String isDeleted;
 	
+	@OneToMany(mappedBy = "noteEntity")
+	@JsonBackReference
+	private List<NoteFileEntity> noteFiles = new ArrayList<>();
+	
 	@ManyToOne
 	@JsonManagedReference
 	@JoinColumn(name = "category_seq")
 	private NoteCategoryEntity noteCategory = new NoteCategoryEntity();
-	
-	@OneToMany(mappedBy = "note")
-	@JsonManagedReference
-	private List<NoteFileEntity> noteFiles = new ArrayList<>();
 }

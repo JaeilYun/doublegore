@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.home.common.file.FileUtils;
 import com.home.contents.note.entity.NoteCategoryEntity;
+import com.home.contents.note.entity.NoteCategoryForm;
 import com.home.contents.note.entity.NoteEntity;
 import com.home.contents.note.entity.NoteFileEntity;
 import com.home.contents.note.entity.NoteForm;
@@ -40,13 +41,29 @@ public class NoteService {
     NoteRepository noteRepository;
     @Autowired
     Environment environment;
-
+    
     public List<NoteCategoryEntity> findNoteCategoryList() {
         return noteCategoryRepository.findAll();
+    }
+    
+    public NoteCategoryEntity findNoteCategory(Long seq) {
+        return noteCategoryRepository.findOne(seq);
     }
 
     public Page<NoteEntity> findNoteAll(PageRequest request) {
         return noteRepository.findByIsDeleted("F", request);
+    }
+    
+    public List<NoteCategoryForm> findNoteCategoryFormList() {
+    	List<NoteCategoryEntity> categoryList = findNoteCategoryList();
+    	List<NoteCategoryForm> formList = new ArrayList<>();
+    	for(NoteCategoryEntity list : categoryList) {
+    		NoteCategoryForm form = new NoteCategoryForm();
+    		form.setSeq(list.getSeq());
+    		form.setType(list.getType());
+    		formList.add(form);
+    	}
+        return formList;
     }
     
     public void insertNote(NoteForm form) {

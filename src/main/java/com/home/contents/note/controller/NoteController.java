@@ -25,6 +25,7 @@ import com.home.common.annotation.breadcrumb.Breadcrumb;
 import com.home.common.annotation.menu.Menu;
 import com.home.common.types.MenuTypes;
 import com.home.contents.note.entity.NoteCategoryEntity;
+import com.home.contents.note.entity.NoteCategoryForm;
 import com.home.contents.note.entity.NoteEntity;
 import com.home.contents.note.entity.NoteForm;
 import com.home.contents.note.service.NoteService;
@@ -70,20 +71,26 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value = "/selectNoteCategory")
-	public @ResponseBody List<NoteCategoryEntity> selectNoteCategory() {
+	public @ResponseBody List<NoteCategoryForm> selectNoteCategory() {
 		log.debug("[NoteController] selectNoteCategory()");
 		
-		List<NoteCategoryEntity> categoryList = noteService.findNoteCategoryList();
-		
-		return categoryList;
+		List<NoteCategoryForm> categoryFormList = noteService.findNoteCategoryFormList();
+		return categoryFormList;
 	}
 	
 	@RequestMapping(value = "/updateCategory")
-	public @ResponseBody List<NoteCategoryEntity> updateCategory(@RequestParam(value="categoryArr[]") String[] categoryArr){
+	public @ResponseBody String[] updateCategory(@RequestParam(value="categoryArr[]") String[] categoryArr){
 		log.debug("[FileController] updateCategory()");
 		List<String> strList = Arrays.asList(categoryArr);
-		List<NoteCategoryEntity> noteCategoryEntityList = noteService.updateCategory(strList);
-		return noteCategoryEntityList;
+		noteService.updateCategory(strList);
+		return categoryArr;
+	}
+	
+	@RequestMapping(value = "/checkNoteWhenCategoryDelete")
+	public @ResponseBody int checkNoteWhenCategoryDelete(Long seq){
+		log.debug("[FileController] checkNoteWhenCategoryDelete()");
+		NoteCategoryEntity category = noteService.findNoteCategory(seq);
+		return category.getNotes().size();
 	}
 	
 	@Menu(type = MenuTypes.NOTE)
@@ -92,9 +99,7 @@ public class NoteController {
 	public String insertNote(NoteForm form) {
 		log.debug("[NoteController] insertNote()");
 
-		for(int i = 0; i < 50; i++){
-			noteService.insertNote(form);
-		}
+		noteService.insertNote(form);
 		return "redirect:/note/main";
 	}
 	

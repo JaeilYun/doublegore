@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8" session="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="col-lg-3"></div>
 <div id="main-content-wrapper" class="expanded-full col-lg-6">
@@ -39,28 +39,28 @@
 				<ul class="pagination" style="font-size: 20px;">
 					<c:choose>
 						<c:when test="${noteList.hasPrevious() eq 'true'}">
-							<li><a href="#" class="pagingClick" onClick="pagingClick();"><i class="fa fa-chevron-left"></i></a></li>
+							<li><a href="#" onClick="pagingClick();"><i class="fa fa-chevron-left"></i></a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="disabled"><a href="#" class="pagingClick" onClick="pagingClick();"><i class="fa fa-chevron-left"></i></a></li>
+							<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>
 						</c:otherwise>
 					</c:choose>
 					<c:forEach var="list" items="${noteList.getContent()}" begin="0" end="${end}" varStatus="idx">
 						<c:choose>
 							<c:when test="${noteList.getNumber()+1 eq idx.count}">  
-								<li class="active"><a href="#" class="pagingClick">${idx.count}</a></li>
+								<li class="active"><a href="#" onClick="return false">${idx.count}</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="#" class="pagingClick" onClick="pagingClick(${idx.count-1});">${idx.count}</a></li>
+								<li><a href="#" onClick="pagingClick(${idx.count-1});">${idx.count}</a></li>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 					<c:choose>
 						<c:when test="${noteList.hasNext() eq 'true'}">
-							<li><a href="#" class="pagingClick"  onClick="pagingClick(${noteList.getNumber()+5});"><i class="fa fa-chevron-right"></i></a></li>
+							<li><a href="#" onClick="pagingClick(${noteList.getNumber()+5});"><i class="fa fa-chevron-right"></i></a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="disabled"><a href="#" class="pagingClick"><i class="fa fa-chevron-right"></i></a></li>
+							<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
@@ -138,7 +138,7 @@
              			str += '<div class="input-group input-group-appendable">';
              			str += 	   '<input autocomplete="off" class="input form-control" id="'+result[i].seq+'" type="text" value="'+result[i].type+'">';
              			str +=     '<span class="input-group-btn">';
-             			str +=         '<button class="btn btn-danger" id="zzzzz" type="button" onClick="removeCategory(this);"><i class="fa fa-minus" aria-hidden="true"></i></button>';
+             			str +=         '<button class="btn btn-danger" type="button" onClick="removeCategory(this);"><i class="fa fa-minus" aria-hidden="true"></i></button>';
              			str +=     '</span>';
              			str += '</div>';
              		}
@@ -189,14 +189,26 @@
     });
 
 	function removeCategory(val){
-		$(val).parents(".input-group-appendable").remove();
+		$.ajax({
+            url: '/note/checkNoteWhenCategoryDelete',
+            data: {
+                "seq" : $(val).parents(".input-group-appendable").find("input").attr('id')
+            },
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (result) {
+            	console.log(result);
+            	if(result > 0) {
+            		$('<label class="has-error" style="color: #a94442" for="inputError2">카테고리에 해당하는 게시글이 존재합니다.</label>').insertBefore($(val).parents(".input-group-appendable"));
+            		$(val).parents(".input-group-appendable").addClass("has-error");
+            		$(val).parents(".input-group-appendable").find("input").focus();
+            		$(val).parents(".input-group-appendable").find("input").select();
+            	} else {
+            		$(val).parents(".input-group-appendable").remove();
+            	}
+            }
+        });
 	}
-	
-	$(".pagingClick").on('click', function(e) {
-		if($(this).closest("li").hasClass("active")) {
-			e.preventDefault();
-		}
-	});
 	
 	pagingClick = function(page) {
 		$.ajax({
@@ -231,21 +243,21 @@
         		var postPage = (result.totalPages < result.number+6) ? result.totalPages-1 : result.number+5
 
     			if(result.first == true) {
-    				pagingStr += '<li class="disabled"><a href="#" class="pagingClick"><i class="fa fa-chevron-left"></i></a></li>';
+    				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
     			} else {
-    				pagingStr += '<li><a href="#" class="pagingClick" onClick="pagingClick('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
+    				pagingStr += '<li><a href="#" onClick="pagingClick('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
     			}
         		for(var i = startPage; i < endPage+1; i++) {
         			if(i == result.number+1) {
-        				pagingStr += '<li class="active"><a href="#" class="pagingClick"">'+(i)+'</a></li>';
+        				pagingStr += '<li class="active"><a href="#" onClick="return false">'+(i)+'</a></li>';
         			} else {
-        				pagingStr += '<li><a href="#" class="pagingClick" onClick="pagingClick('+(i-1)+');">'+(i)+'</a></li>';
+        				pagingStr += '<li><a href="#" onClick="pagingClick('+(i-1)+');">'+(i)+'</a></li>';
         			}
         		}
         		if(result.last == true) {
-    				pagingStr += '<li class="disabled"><a href="#" class="pagingClick""><i class="fa fa-chevron-right"></i></a></li>';
+    				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
     			} else {
-    				pagingStr += '<li><a href="#" class="pagingClick" onClick="pagingClick('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
+    				pagingStr += '<li><a href="#" onClick="pagingClick('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
     			}
         		$(".pagination").append(pagingStr);
             }

@@ -12,6 +12,14 @@
 		<put-attribute name="body" value="/WEB-INF/views/common/templates/default/body.jsp"/>
 		<put-attribute name="includes_js" value="/WEB-INF/views/common/templates/default/includes_js.jsp"/>
 	</definition>
+	
+	<definition name="image" template="/WEB-INF/views/common/templates/default/imageTemplate.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/common/templates/default/header.jsp"/>
+		<put-attribute name="globals" value="/WEB-INF/views/common/templates/default/globals.jsp"/>
+		<put-attribute name="includes_css" value="/WEB-INF/views/common/templates/default/includes_css.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/common/templates/default/body.jsp"/>
+		<put-attribute name="includes_js" value="/WEB-INF/views/common/templates/default/includes_js.jsp"/>
+	</definition>
 
 	<definition name="dashboard/*" extends="default">
 		<put-attribute name="body" value="/WEB-INF/views/dashboard/{1}.jsp"/>
@@ -30,5 +38,8 @@
 	</definition>
 	<definition name="note/*" extends="default">
 		<put-attribute name="body" value="/WEB-INF/views/note/{1}.jsp"/>
+	</definition>
+	<definition name="note/image/popup" extends="image">
+		<put-attribute name="body" value="/WEB-INF/views/note/image.jsp"/>
 	</definition>
 </tiles-definitions>

@@ -37,5 +37,5 @@ public class NoteCategoryEntity implements Serializable {
     
     @OneToMany(mappedBy = "noteCategory")
 	@JsonBackReference
-	private List<NoteEntity> noteFiles = new ArrayList<>();
+	private List<NoteEntity> notes = new ArrayList<>();
 }
