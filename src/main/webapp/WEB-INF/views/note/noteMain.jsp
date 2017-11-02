@@ -7,24 +7,24 @@
 		<div class="main-content note-list-div" style="display: block;padding-top: 20px;">
 			<div class="widget-content bottom-30px">
 				<div class="row">
-					<div class="col-md-2" style="text-align: left;">
+					<div class="col-md-3" style="text-align: left;">
 						<div class="form-control" style="border: none;">
 							<span style="padding: 3px;font-size: 20px;" class="register-btn">
-								<a href="#" class="note-view-top-btn" style="text-decoration:none !important;color: #bbb;">글쓰기</a>
+								<a href="#" class="note-list-new-btn" style="text-decoration:none !important;color: rgba(61, 179, 158, 0.5);font-weight: 600;">글쓰기</a>
 							</span>
 						</div>
 					</div>
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<select class="form-control">
 							<c:forEach var="list" items="${categoryList}">
 								<option value="${list.seq}">${list.type}</option>
 							</c:forEach>
 						</select>
 					</div>
-					<div class="col-md-2" style="text-align: right;">
+					<div class="col-md-3" style="text-align: right;">
 						<div class="form-control" style="border: none;">
 							<span style="padding: 3px;font-size: 20px;" class="setting-btn">
-								<a href="#" class="note-view-top-btn" style="text-decoration:none !important;color: #bbb;">설정</a>
+								<a href="#" class="note-list-setting-btn" style="text-decoration:none !important;color: rgba(226, 71, 21, 0.5);font-weight: 600;">설정</a>
 							</span>
 						</div>
 					</div>
@@ -43,14 +43,14 @@
 						<div class="widget-content" style="text-align: center;">
 							<div style="text-align: right;height: 50px;">
 								<input type="hidden" class="note-view-seq" value="">
-								<span style="padding: 3px;font-size: 20px;" class="note-view-back-btn">
-									<a href="#" class="note-view-btnset" style="text-decoration:none !important;color: #bbb;">메뉴</a>
+								<span style="padding: 3px;font-size: 16px;" class="note-view-back-btn">
+									<a href="#" class="note-view-menu-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
 								</span>
-								<span style="padding: 3px;color: #bbb;font-size: 20px;" class="">
-									<a href="#" class="note-view-btnset" style="text-decoration:none !important;color: #bbb;">수정</a>
+								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="">
+									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(61, 179, 158, 0.5);;font-weight: 600;">수정</a>
 								</span>
-								<span style="padding: 3px;color: #bbb;font-size: 20px;" class="note-view-delete-btn">
-									<a href="#" class="note-view-btnset" style="text-decoration:none !important;color: #bbb;">삭제</a>
+								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="note-view-delete">
+									<a href="#" class="note-view-delete-btn" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">삭제</a>
 								</span>
 							</div>
 							<h4 style="color: #398439; font-weight: 600;" class="note-view-category"></h4>
@@ -306,7 +306,7 @@
 		$(".note-view-div").css("display","none");
 	});
 	
-	$(".note-view-delete-btn").on('click', function(){
+	$(".note-view-delete").on('click', function(){
 		$.ajax({
             url: '/note/deleteNote',
             data: {
