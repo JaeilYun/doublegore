@@ -5583,7 +5583,7 @@ html[dir="rtl"] .select2-search-choice-close {
 }
 
 .note-editor body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -5758,7 +5758,7 @@ html[dir="rtl"] .select2-search-choice-close {
 .note-editor .h4,
 .note-editor .h5,
 .note-editor .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -14703,18 +14703,18 @@ div.DTTT_collection a.DTTT_button {
 /*	General Styles
 /*------------------------------------------------*/
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 13px;
   color: #555;
   background: #ececec;
 }
 
 h1, h2 {
-  font-family: "latolight";
+  font-family: Noto Sans KR, sans-serif";
 }
 
 h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
 }
 
 a {
@@ -14750,7 +14750,7 @@ input {
   }
 }
 @font-face {
-  font-family: "latolight";
+  font-family: "Noto Sans KR, sans-serif";
   src: url('../fonts/lato-lig-webfont.eot?1383488388');
   src: url('../fonts/lato-lig-webfont.eot?&1383488388#iefix') format('embedded-opentype'), url('../fonts/lato-lig-webfont.woff?1383488388') format('woff'), url('../fonts/lato-lig-webfont.ttf?1383488388') format('truetype'), url('../fonts/lato-lig-webfont.svg?1383488388') format('svg');
 }
@@ -15108,7 +15108,7 @@ body.topnav-fixed #wrapper {
   width: 32px;
 }
 .top-bar .notifications .inbox .name {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 0.85em;
   color: #555;
   font-weight: 700;

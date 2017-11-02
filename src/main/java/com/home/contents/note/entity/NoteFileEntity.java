@@ -65,8 +65,8 @@ public class NoteFileEntity implements Serializable {
     @Column(name = "is_deleted")
     private String isDeleted;
 
-    @ManyToOne
-    @JsonManagedReference
+    /*@ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "note_seq")
-    private NoteEntity noteEntity;
+    private NoteEntity noteEntity;*/
 }

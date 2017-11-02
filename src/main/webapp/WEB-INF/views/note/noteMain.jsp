@@ -4,19 +4,29 @@
 <div class="col-lg-3"></div>
 <div id="main-content-wrapper" class="expanded-full col-lg-6">
 	<div class="content">
-		<div class="main-content note-list-div" style="display: block;">
+		<div class="main-content note-list-div" style="display: block;padding-top: 20px;">
 			<div class="widget-content bottom-30px">
 				<div class="row">
-					<div class="col-md-9">
-						<a href="#" class="btn btn-primary register-btn" style="border-radius: 4px;"><i class="fa fa-plus-square"></i> 글쓰기</a>
-						<select id="multiselect4-filter" name="multiselect4[]" class="multiselect">
+					<div class="col-md-2" style="text-align: left;">
+						<div class="form-control" style="border: none;">
+							<span style="padding: 3px;font-size: 20px;" class="register-btn">
+								<a href="#" class="note-view-top-btn" style="text-decoration:none !important;color: #bbb;">글쓰기</a>
+							</span>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<select class="form-control">
 							<c:forEach var="list" items="${categoryList}">
 								<option value="${list.seq}">${list.type}</option>
 							</c:forEach>
 						</select>
 					</div>
-					<div class="col-md-3">
-						<a href="#" class="btn btn-primary pull-right setting-btn" style="border-radius: 4px;"><i class="fa fa-cog"></i> 설정</a>
+					<div class="col-md-2" style="text-align: right;">
+						<div class="form-control" style="border: none;">
+							<span style="padding: 3px;font-size: 20px;" class="setting-btn">
+								<a href="#" class="note-view-top-btn" style="text-decoration:none !important;color: #bbb;">설정</a>
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -31,29 +41,30 @@
 					<!-- BASIC INPUT -->
 					<div style="padding-top: 30px;padding-bottom: 40px;">
 						<div class="widget-content" style="text-align: center;">
-							<h4 style="color: #398439; font-weight: 600;">카테고리</h4>
-							<h1 style="font-weight: 600;padding-bottom: 10px;">제목입니다</h1>
-							<span class="timestamp" style="color:#bbb">2017-11-01 00:45</span>
+							<div style="text-align: right;height: 50px;">
+								<input type="hidden" class="note-view-seq" value="">
+								<span style="padding: 3px;font-size: 20px;" class="note-view-back-btn">
+									<a href="#" class="note-view-btnset" style="text-decoration:none !important;color: #bbb;">메뉴</a>
+								</span>
+								<span style="padding: 3px;color: #bbb;font-size: 20px;" class="">
+									<a href="#" class="note-view-btnset" style="text-decoration:none !important;color: #bbb;">수정</a>
+								</span>
+								<span style="padding: 3px;color: #bbb;font-size: 20px;" class="note-view-delete-btn">
+									<a href="#" class="note-view-btnset" style="text-decoration:none !important;color: #bbb;">삭제</a>
+								</span>
+							</div>
+							<h4 style="color: #398439; font-weight: 600;" class="note-view-category"></h4>
+							<h1 style="font-weight: 600;padding-bottom: 10px;" class="note-view-title"></h1>
+							<span class="timestamp note-view-date" style="color:#bbb"></span>
 						</div>
 					</div>
 					<div style="border-bottom:1px solid #ddd"></div>
-					<div style="padding-top: 40px;">
+					<div style="padding-top: 40px;padding-bottom: 40px;">
 						<div class="widget-content">
-							<p>
-							00:35:33.620 [http-nio-8080-exec-18] DEBUG org.springframework.orm.jpa.JpaTransactionManager - Closing JPA EntityManager [SessionImpl(PersistenceContext[entityKeys=[EntityKey[com.home.contents.note.entity.NoteEntity#292], EntityKey[com.home.contents.note.entity.NoteEntity#291], EntityKey[com.home.contents.note.entity.NoteEntity#296], EntityKey[com.home.contents.note.entity.NoteEntity#295], EntityKey[com.home.contents.note.entity.NoteEntity#294], EntityKey[com.home.contents.note.entity.NoteCategoryEntity#1], EntityKey[com.home.contents.note.entity.NoteEntity#293], EntityKey[com.home.contents.note.entity.NoteEntity#300], EntityKey[com.home.contents.note.entity.NoteEntity#299], EntityKey[com.home.contents.note.entity.NoteEntity#298], EntityKey[com.home.contents.note.entity.NoteEntity#297]],collectionKeys=[CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#299], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#298], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#300], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#295], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#294], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#297], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#296], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#291], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#293], CollectionKey[com.home.contents.note.entity.NoteEntity.noteFiles#292], CollectionKey[com.home.contents.note.entity.NoteCategoryEntity.notes#1]]];ActionQueue[insertions=ExecutableList{size=0} updates=ExecutableList{size=0} deletions=ExecutableList{size=0} orphanRemovals=ExecutableList{size=0} collectionCreations=ExecutableList{size=0} collectionRemovals=ExecutableList{size=0} collectionUpdates=ExecutableList{size=0} collectionQueuedOps=ExecutableList{size=0} unresolvedInsertDependencies=null])] after transaction
-00:35:33.620 [http-nio-8080-exec-18] DEBUG org.springframework.orm.jpa.EntityManagerFactoryUtils - Closing JPA EntityManager
-00:35:33.621 [http-nio-8080-exec-18] DEBUG org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor - Written [Page 1 of 12 containing com.home.contents.note.entity.NoteEntity instances] as "application/json" using [org.springframework.http.converter.json.MappingJackson2HttpMessageConverter@78923b38]
-00:35:33.621 [http-nio-8080-exec-18] DEBUG org.springframework.web.servlet.DispatcherServlet - Null ModelAndView returned to DispatcherServlet with name 'dispatcher': assuming HandlerAdapter completed request handling
-00:35:33.621 [http-nio-8080-exec-18] DEBUG org.springframework.web.servlet.DispatcherServlet - Successfully completed request
-							</p>
+							<div class="note-view-contents" style="line-height: 2;"></div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="widget-footer" style="text-align: right;">
-						<button type="button" class="btn btn-default note-back-btn" style="border-radius: 4px;"><i class="fa fa-arrow-left"></i> Back</button>
-						<button type="button" class="btn btn-success" style="border-radius: 4px;" onClick="saveContent();"><i class="fa fa-floppy-o"></i> Edit</button>
-					</div>
+					<div style="border-bottom:1px solid #ddd"></div>
 				</div>
 			</div>
 		</div>
@@ -68,7 +79,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Settings</h4>
+				<h4 class="modal-title" id="myModalLabel">Category settings</h4>
 			</div>
 			<div class="modal-body category-modal-body">
 				<div class="row">
@@ -222,21 +233,24 @@
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
+            	if(result.content.length == 0) {
+            		pagingClick((result.number-1) < 0 ? 0 : (result.number-1));
+            	}
         		var noteStr = "";
         		var pagingStr = "";
         		$(".noteList").empty();
         		$(".pagination").empty();
         		$("#page").val(result.number);
         		
-        		
+        		noteStr += '<div style="border-bottom:1px solid #ddd"></div>';
         		for(var i = 0; i < result.content.length; i++){
-        			noteStr += '<div style="padding: 8px;" onClick="noteView('+result.content[i].seq+')">';
+        			noteStr += '<a href="#" onClick="noteView('+result.content[i].seq+')" style="text-decoration:none !important;"><div class="note-list-hover" style="padding: 8px;border-right: 1px solid white; border-left: 1px solid white;">';
         			noteStr += '<div class="widget-content" style="padding-bottom:15px;">';
-        			noteStr += '<h3 style="font-weight: 500;">'+result.content[i].title+'</h3>';
-        			noteStr += '<div style="font-size:15px;">'+result.content[i].contents+'</div>';
+        			noteStr += '<h3 style="font-weight: 500;color:#555 !important;padding-bottom: 10px;">'+result.content[i].title+'</h3>';
+        			noteStr += '<div style="color:#555 !important;">'+result.content[i].contents+'</div>';
         			noteStr += '<div>';
-        			noteStr += '<span style="color: #1D92AF;font-weight: 600;">'+result.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+result.content[i].updatedDate+'</span>';
-        			noteStr += '</div></div></div><div style="border-bottom:1px solid #ddd"></div>';
+        			noteStr += '<span style="color: #1D92AF !important;font-weight: 500;">'+result.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+result.content[i].updatedDate+'</span>';
+        			noteStr += '</div></div></div></a><div style="border-bottom:1px solid #ddd"></div>';
         		}
         		$(".noteList").append(noteStr);
         		
@@ -268,8 +282,44 @@
 	}
 	
 	noteView = function(seq){
-		$(".note-list-div").css("display","none");
-		$(".note-view-div").css("display","block");
+		$.ajax({
+            url: '/note/selectNote',
+            data: {
+                "seq" : seq
+            },
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (result) {
+            	$(".note-view-seq").val(result.seq);
+            	$(".note-view-category").text(result.noteCategory.type);
+            	$(".note-view-title").text(result.title);
+            	$(".note-view-date").text(result.updatedDate);
+            	$(".note-view-contents").html(result.contents);
+        		$(".note-list-div").css("display","none");
+        		$(".note-view-div").css("display","block");
+            }
+		});
 	}
+	
+	$(".note-view-back-btn").on('click', function(){
+		$(".note-list-div").css("display","block");
+		$(".note-view-div").css("display","none");
+	});
+	
+	$(".note-view-delete-btn").on('click', function(){
+		$.ajax({
+            url: '/note/deleteNote',
+            data: {
+                "seq" : $(".note-view-seq").val(),
+                "page" : $("#page").val()
+            },
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (result) {
+            	pagingClick(result);
+            	$(".note-view-back-btn").click();
+            }
+		});
+	});
 
 </script>

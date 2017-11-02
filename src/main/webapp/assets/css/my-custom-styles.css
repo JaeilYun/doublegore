@@ -142,3 +142,19 @@
 .btn-group> .multiselect.dropdown-toggle {
 	border-radius: 4px; !important
 }
+.note-view-btnset:hover {
+	color: #555 !important;
+	transition-duration: 0.3s;
+	font-weight: 600;
+}
+.note-list-hover:hover {
+	background-color: #f9f9f9;
+	border-right: 1px solid lightgray !important;
+	border-left: 1px solid lightgray !important;
+	transition-duration: 0.1s;
+}
+.note-view-top-btn:hover {
+	color: #555 !important;
+	transition-duration: 0.3s;
+	font-weight: 600;
+}

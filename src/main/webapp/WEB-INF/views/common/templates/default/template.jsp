@@ -25,7 +25,7 @@
 
 </head>
 
-<body class="ontop-nav topnav-fixed dashboard4" style="background: #fff !important">
+<body class="ontop-nav topnav-fixed dashboard4" style="background: #fff !important; font-family: Noto Sans KR, sans-serif;">
 	<!-- WRAPPER -->
 	<div id="wrapper" class="wrapper" style="padding-top: 100px;">
 	
@@ -34,7 +34,7 @@
 		<!-- END TOP BAR -->
 	
 		<!-- MAIN CONTENT WRAPPER -->
-		<div class="row">
+		<div class="row" style="width: 100%;">
 				<!-- START BODY -->
 				<tiles:insertAttribute name="body" />
 				<!-- END BODY -->

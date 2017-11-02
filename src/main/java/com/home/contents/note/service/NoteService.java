@@ -54,6 +54,18 @@ public class NoteService {
         return noteRepository.findByIsDeleted("F", request);
     }
     
+    public List<NoteEntity> findByNoteCategory(NoteCategoryEntity entity) {
+    	return noteRepository.findByNoteCategory(entity);
+    }
+    
+    public NoteEntity findNote(Long seq) {
+    	return noteRepository.findOne(seq);
+    }
+    
+    public void deleteNote(Long seq) {
+    	noteRepository.delete(seq);
+    }
+    
     public List<NoteCategoryForm> findNoteCategoryFormList() {
     	List<NoteCategoryEntity> categoryList = findNoteCategoryList();
     	List<NoteCategoryForm> formList = new ArrayList<>();

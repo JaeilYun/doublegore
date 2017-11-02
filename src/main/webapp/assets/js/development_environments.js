@@ -53,7 +53,7 @@
 /* show development environments indicator */
 (function() {
     function addEditorEnvIndicator() {
-        if (window.Editor && Editor.__EDITOR_LOADED) {
+        /*if (window.Editor && Editor.__EDITOR_LOADED) {
             var indicator = document.createElement("span");
             indicator.innerHTML = "DEVELOPMENT MODE";
             $tx.setStyle(indicator, {
@@ -68,7 +68,7 @@
             canvas.appendChild(indicator);
         } else {
             setTimeout(arguments.callee, 500);
-        }
+        }*/
     }
 
     EditorJSLoader.ready(addEditorEnvIndicator);

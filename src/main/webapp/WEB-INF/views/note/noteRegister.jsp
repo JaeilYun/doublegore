@@ -7,10 +7,10 @@
 		<div class="row">
 			<div class="col-md-12">
 				<!-- BASIC INPUT -->
-				<div class="widget">
+				<div class="widget" style="background-color: white; padding: 15px;">
 					<div class="widget-content">
 						<form name="tx_editor_form" id="tx_editor_form" action="/note/insertNote" method="post" accept-charset="utf-8">
-							<div class="form-horizontal">
+							<div class="form-horizontal" style="padding-bottom: 30px;">
 								<div class="form-group">
 									<label class="col-md-1 control-label">Title</label>
 									<div class="col-md-11">

@@ -32,6 +32,9 @@
  * limitations under the License.
  * ========================================================================
  */
+ 
+ @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
 .has-switch {
   display: inline-block;
   cursor: pointer;
@@ -4780,7 +4783,7 @@ html[dir="rtl"] .select2-search-choice-close {
   -webkit-tap-highlight-color: transparent; }
 
 .note-editor body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -4923,7 +4926,7 @@ html[dir="rtl"] .select2-search-choice-close {
 .note-editor .h4,
 .note-editor .h5,
 .note-editor .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-weight: 500;
   line-height: 1.1;
   color: inherit; }
@@ -12226,16 +12229,16 @@ div.DTTT_collection a.DTTT_button {
 /*	General Styles
 /*------------------------------------------------*/
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 13px;
   color: #555;
   background: #ececec; }
 
 h1, h2 {
-  font-family: "latolight"; }
+  font-family: Noto Sans KR, sans-serif; }
 
 h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: Noto Sans KR, sans-serif; }
 
 a {
   color: #1D92AF; }
@@ -12261,7 +12264,7 @@ input {
     max-width: 100%;
     width: 100%; } }
 @font-face {
-  font-family: "latolight";
+  font-family: "Noto Sans KR, sans-serif";
   src: url("../fonts/lato-lig-webfont.eot");
   src: url("../fonts/lato-lig-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato-lig-webfont.woff") format("woff"), url("../fonts/lato-lig-webfont.ttf") format("truetype"), url("../fonts/lato-lig-webfont.svg") format("svg"); }
 @font-face {
@@ -12544,7 +12547,7 @@ body.topnav-fixed #wrapper {
     .top-bar .notifications .inbox img {
       width: 32px; }
     .top-bar .notifications .inbox .name {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: Noto Sans KR, sans-serif;
       font-size: 0.85em;
       color: #555;
       font-weight: 700;
@@ -13484,7 +13487,7 @@ body.sidebar-float .content-wrapper {
 
 /* big number with sparkline */
 .big-number {
-  font-family: "latolight";
+  font-family: Noto Sans KR, sans-serif;
   font-size: 3.5em; }
 
 .big-number-stat span {
@@ -13740,7 +13743,7 @@ fieldset {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
-  font-family: "latolight"; }
+  /* font-family: "Noto Sans KR, sans-serif"; */ }
   .btn i {
     margin-right: 3px; }
   .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
@@ -14718,7 +14721,7 @@ input.ui-editRangeSlider-inputValue {
   color: #555; }
 
 .gritter-item {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   padding: 2px 11px; }
   .gritter-item .gritter-title {
     text-shadow: none; }
@@ -15843,7 +15846,7 @@ ul.ColVis_collection {
     .ui-jqdialog .ui-icon-closethick:before {
       content: '\f057'; }
   .ui-jqdialog .fm-button {
-    font-family: "latolight";
+    font-family: Noto Sans KR, sans-serif;
     color: #fff;
     font-size: 14px;
     line-height: 1.2;
@@ -16346,7 +16349,7 @@ div[class*="col-"] > .form-group {
 .profile h3,
 .activity h3,
 .settings h3 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 1.2em;
   margin-top: 0;
   margin-bottom: 20px; }
@@ -16367,7 +16370,7 @@ div[class*="col-"] > .form-group {
   .profile .user-info-left img {
     border: 3px solid #fff; }
   .profile .user-info-left h2 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Noto Sans KR, sans-serif;
     font-size: 1.3em;
     margin-bottom: 20px; }
     .profile .user-info-left h2 i {

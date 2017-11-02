@@ -146,7 +146,7 @@
 
 /* big number with sparkline */
 .big-number {
-  font-family: "latolight";
+  font-family: Noto Sans KR, sans-serif;
   font-size: 3.5em;
 }
 
@@ -466,7 +466,7 @@ fieldset {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
-  font-family: "latolight";
+  font-family: Noto Sans KR, sans-serif;
 }
 .btn i {
   margin-right: 3px;
@@ -1696,7 +1696,7 @@ input.ui-editRangeSlider-inputValue {
 }
 
 .gritter-item {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   padding: 2px 11px;
 }
 .gritter-item .gritter-title {
@@ -3156,7 +3156,7 @@ ul.ColVis_collection li span {
   content: '\f057';
 }
 .ui-jqdialog .fm-button {
-  font-family: "latolight";
+  font-family: Noto Sans KR, sans-serif;
   color: #fff;
   font-size: 14px;
   line-height: 1.2;
@@ -3781,7 +3781,7 @@ div[class*="col-"] > .form-group {
 .profile h3,
 .activity h3,
 .settings h3 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 1.2em;
   margin-top: 0;
   margin-bottom: 20px;
@@ -3808,7 +3808,7 @@ div[class*="col-"] > .form-group {
   border: 3px solid #fff;
 }
 .profile .user-info-left h2 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Noto Sans KR, sans-serif;
   font-size: 1.3em;
   margin-bottom: 20px;
 }

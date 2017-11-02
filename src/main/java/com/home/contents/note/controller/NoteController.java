@@ -82,11 +82,26 @@ public class NoteController {
 		return categoryArr;
 	}
 	
+	@RequestMapping(value = "/selectNote")
+	public @ResponseBody NoteEntity selectNoate(Long seq){
+		log.debug("[FileController] selectNoate()");
+		NoteEntity note = noteService.findNote(seq);
+		return note;
+	}
+	
+	@RequestMapping(value = "/deleteNote")
+	public @ResponseBody String deleteNote(Long seq, String page){
+		log.debug("[FileController] deleteNote()");
+		noteService.deleteNote(seq);
+		return page;
+	}
+	
 	@RequestMapping(value = "/checkNoteWhenCategoryDelete")
 	public @ResponseBody int checkNoteWhenCategoryDelete(Long seq){
 		log.debug("[FileController] checkNoteWhenCategoryDelete()");
 		NoteCategoryEntity category = noteService.findNoteCategory(seq);
-		return category.getNotes().size();
+		List<NoteEntity> noteList = noteService.findByNoteCategory(category);
+		return noteList.size();
 	}
 	
 	@Menu(type = MenuTypes.NOTE)
