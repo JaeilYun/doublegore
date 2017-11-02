@@ -10,12 +10,12 @@
 					<div class="col-md-3" style="text-align: left;">
 						<div class="form-control" style="border: none;">
 							<span style="padding: 3px;font-size: 20px;" class="register-btn">
-								<a href="#" class="note-list-new-btn" style="text-decoration:none !important;color: rgba(61, 179, 158, 0.5);font-weight: 600;">글쓰기</a>
+								<a href="#" class="note-list-new-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">글쓰기</a>
 							</span>
 						</div>
 					</div>
 					<div class="col-md-6">
-						<select class="form-control">
+						<select class="form-control note-select">
 							<c:forEach var="list" items="${categoryList}">
 								<option value="${list.seq}">${list.type}</option>
 							</c:forEach>
@@ -47,7 +47,7 @@
 									<a href="#" class="note-view-menu-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
 								</span>
 								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="">
-									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(61, 179, 158, 0.5);;font-weight: 600;">수정</a>
+									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">수정</a>
 								</span>
 								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="note-view-delete">
 									<a href="#" class="note-view-delete-btn" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">삭제</a>

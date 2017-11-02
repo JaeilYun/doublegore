@@ -143,7 +143,7 @@
 	border-radius: 4px; !important
 }
 .note-list-new-btn:hover, .note-view-edit-btn:hover {
-	color: #3db39e !important;
+	color: #4BA84B !important;
 	transition-duration: 0.3s;
 }
 .note-list-setting-btn:hover {
@@ -164,3 +164,19 @@
 	border-left: 1px solid lightgray !important;
 	transition-duration: 0.1s;
 }
+.note-select {
+    border: 2px solid #3db39e;
+    color: #3db39e;
+    border-radius: 3px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 3px;
+}
+.note-select:focus {
+	border-color: #3db39e;
+  	outline: 0;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(61, 179, 158, 0.6);
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(61, 179, 158, 0.6);
+}
+
