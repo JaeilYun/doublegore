@@ -142,27 +142,51 @@
 .btn-group> .multiselect.dropdown-toggle {
 	border-radius: 4px; !important
 }
+.note-list-new-btn, .note-view-edit-btn, .note-list-setting-btn, .note-view-delete-btn, .note-view-menu-btn {
+	padding: 3px 15px 3px 15px;
+	border-radius: 20px;
+}
 .note-list-new-btn:hover, .note-view-edit-btn:hover {
 	color: #4BA84B !important;
 	transition-duration: 0.3s;
+	border-color: #4BA84B;
+  	outline: 0;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(75, 168, 75, 0.6);
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(75, 168, 75, 0.6);
 }
 .note-list-setting-btn:hover {
 	color: #E24715 !important;
 	transition-duration: 0.3s;
+	border-color: #E24715;
+  	outline: 0;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(226, 71, 21, 0.6);
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(226, 71, 21, 0.6);
 }
 .note-view-delete-btn:hover {
 	color: #DB3833 !important;
 	transition-duration: 0.3s;
+	border-color: #DB3833;
+  	outline: 0;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(219, 56, 51, 0.6);
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(219, 56, 51, 0.6);
 }
 .note-view-menu-btn:hover {
 	color: #555 !important;
 	transition-duration: 0.3s;
+	border-color: #555;
+  	outline: 0;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #bbb;
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #bbb;
 }
 .note-list-hover:hover {
 	background-color: #f9f9f9;
 	border-right: 1px solid lightgray !important;
 	border-left: 1px solid lightgray !important;
 	transition-duration: 0.1s;
+	border-color: #f9f9f9;
+  	outline: 0;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 3px rgba(85, 85, 85, 0.6);
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 3px rgba(85, 85, 85, 0.6);
 }
 .note-select {
     border: 2px solid #3db39e;

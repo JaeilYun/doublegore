@@ -15,7 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -65,8 +64,8 @@ public class NoteFileEntity implements Serializable {
     @Column(name = "is_deleted")
     private String isDeleted;
 
-    /*@ManyToOne
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "note_seq")
-    private NoteEntity noteEntity;*/
+    private NoteEntity noteEntity;
 }

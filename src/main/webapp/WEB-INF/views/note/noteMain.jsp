@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="col-lg-3"></div>
-<div id="main-content-wrapper" class="expanded-full col-lg-6">
+<div id="main-content-wrapper" class="col-lg-6">
 	<div class="content">
 		<div class="main-content note-list-div" style="display: block;padding-top: 20px;">
 			<div class="widget-content bottom-30px">
 				<div class="row">
-					<div class="col-md-3" style="text-align: left;">
+					<div class="col-md-3" style="text-align: left;margin-bottom: 5px;">
 						<div class="form-control" style="border: none;">
 							<span style="padding: 3px;font-size: 20px;" class="register-btn">
 								<a href="#" class="note-list-new-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">글쓰기</a>
@@ -101,7 +101,7 @@
 <form id="registerForm" name="registerForm" method="post" action="/note/register">
 </form>
 
-<form id="mainForm" name="mainForm" method="post" action="/note/main">
+<form id="submitForm" name="submitForm" method="post" action="">
 	<input type="hidden" id="page" name="page" value="${noteList.getNumber()}">
 	<input type="hidden" id="size" name="size" value="${noteList.getSize()}">
 </form>
@@ -176,7 +176,8 @@
                 type: 'POST',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (result) {
-            		$("#mainForm").submit();
+                	$("#submitForm").attr("action","/note/main");
+       				$("#submitForm").submit();
                 }
             });
     	}
@@ -190,11 +191,13 @@
     		$("#registerForm").submit();
     	});
     	
-
-    	
-    	$(".category-modal-body").on('click',function(){
+    	$(".category-modal-body").on('click', function(){
     		$(".category-error-message").remove();
     		$(".input-group-appendable").removeClass("has-error");
+    	});
+    	
+    	$(".note-view-edit-btn").on('click', function(){
+    		
     	});
     });
 

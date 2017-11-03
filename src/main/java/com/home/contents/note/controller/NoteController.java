@@ -84,9 +84,20 @@ public class NoteController {
 	
 	@RequestMapping(value = "/selectNote")
 	public @ResponseBody NoteEntity selectNoate(Long seq){
-		log.debug("[FileController] selectNoate()");
+		log.debug("[FileController] selectNote()");
 		NoteEntity note = noteService.findNote(seq);
 		return note;
+	}
+	
+	@RequestMapping(value = "/editNote")
+	public ModelAndView editNote(Long seq){
+		log.debug("[FileController] editNote()");
+		ModelAndView mav = new ModelAndView("note/noteUpdate");
+		NoteEntity note = noteService.findNote(seq);
+		List<NoteCategoryEntity> categoryList = noteService.findNoteCategoryList();
+		mav.addObject("categoryList", categoryList);
+		mav.addObject("note", note);
+		return mav;
 	}
 	
 	@RequestMapping(value = "/deleteNote")

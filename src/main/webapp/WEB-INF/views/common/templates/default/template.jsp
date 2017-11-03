@@ -34,7 +34,7 @@
 		<!-- END TOP BAR -->
 	
 		<!-- MAIN CONTENT WRAPPER -->
-		<div class="row" style="width: 100%;">
+		<div class="row">
 				<!-- START BODY -->
 				<tiles:insertAttribute name="body" />
 				<!-- END BODY -->

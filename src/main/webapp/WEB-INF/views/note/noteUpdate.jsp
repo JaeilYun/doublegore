@@ -13,10 +13,13 @@
 							<div style="text-align: right;height: 50px;">
 								<input type="hidden" class="note-view-seq" value="">
 								<span style="padding: 3px;font-size: 16px;" class="note-view-back-btn">
-									<a href="#" class="note-view-menu-btn note-back-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+									<a href="#" class="note-view-menu-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+								</span>
+								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="note-view-delete">
+									<a href="#" class="note-view-delete-btn" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">뒤로</a>
 								</span>
 								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="">
-									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">저장</a>
+									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">수정</a>
 								</span>
 							</div>
 						</div>
@@ -61,8 +64,6 @@
 <div class="col-lg-3"></div>
 
 <form id="backForm" name="backForm" method="post" action="/note/main">
-	<input type="hidden" id="page" name="page" value="${noteList.getNumber()}">
-	<input type="hidden" id="size" name="size" value="${noteList.getSize()}">
 </form>
 
 <script>
@@ -142,6 +143,46 @@ function validForm(editor) {
 		alert('내용을 입력하세요'); 
 		return false; 
 	} 
+	return true; 
+}
+
+function setForm(editor) { 
+	var i, input; 
+	var form = editor.getForm(); 
+	var content = editor.getContent();
+	
+	// 본문 내용을 필드를 생성하여 값을 할당하는 부분
+	var textarea = document.createElement('textarea');
+	textarea.style.display = "none";
+	textarea.name = 'content'; //name값 수정 
+	textarea.value = content;
+	form.createField(textarea); 
+	
+	/* 아래의 코드는 첨부된 데이터를 필드를 생성하여 값을 할당하는 부분으로 상황에 맞게 수정하여 사용한다.
+   	 첨부된 데이터 중에 주어진 종류(image,file..)에 해당하는 것만 배열로 넘겨준다. */
+	/* var images = editor.getAttachments('image');
+	for (i = 0; i < images.length; i++) {
+	    // existStage는 현재 본문에 존재하는지 여부
+	    if (images[i].existStage) {
+	        // data는 팝업에서 execAttach 등을 통해 넘긴 데이터
+	        alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
+	        input = document.createElement('input');
+	        input.type = 'hidden';
+	        input.name = 'attach_image';
+	        input.value = images[i].data.imageurl;  // 예에서는 이미지경로만 받아서 사용
+	        form.createField(input);
+	    }
+	}
+	
+	var files = editor.getAttachments('file');
+	for (i = 0; i < files.length; i++) {
+	    input = document.createElement('input');
+	    input.type = 'hidden';
+	    input.name = 'attach_file';
+	    input.value = files[i].data.attachurl;
+	    form.createField(input);
+	} */
+	
 	return true; 
 }
   
