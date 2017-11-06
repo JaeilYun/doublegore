@@ -45,9 +45,6 @@
 								<div class="form-horizontal">
 									<div style="margin-bottom: -10px;">
 											<jsp:include page="/WEB-INF/views/note/editor.jsp" flush="true"></jsp:include>
-									<script>
-									if('${board!=null}'=='true') Editor.modify({'content': '${board.board_content}'});
-									</script>
 									</div>
 								</div>
 							</form>
@@ -143,6 +140,45 @@ function validForm(editor) {
 		return false; 
 	} 
 	return true; 
+}
+
+function setForm(editor) {
+    var i, input;
+    var form = editor.getForm();
+    var content = editor.getContent();
+
+    // 본문 내용을 필드를 생성하여 값을 할당하는 부분
+    var textarea = document.createElement('textarea');
+    textarea.name = 'content';
+    textarea.value = content;
+    form.createField(textarea);
+
+    /* 아래의 코드는 첨부된 데이터를 필드를 생성하여 값을 할당하는 부분으로 상황에 맞게 수정하여 사용한다.
+     첨부된 데이터 중에 주어진 종류(image,file..)에 해당하는 것만 배열로 넘겨준다. */
+    var images = editor.getAttachments('image');
+    for (i = 0; i < images.length; i++) {
+        // existStage는 현재 본문에 존재하는지 여부
+        if (images[i].existStage) {
+            // data는 팝업에서 execAttach 등을 통해 넘긴 데이터
+            //alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'attachImage';
+            input.value = images[i].data.filename;  // 예에서는 이미지경로만 받아서 사용
+            form.createField(input);
+        }
+    }
+    console.log(input);
+
+    /* var files = editor.getAttachments('file');
+    for (i = 0; i < files.length; i++) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'attach_file';
+        input.value = files[i].data.attachurl;
+        form.createField(input);
+    } */
+    return true;
 }
   
 </script>

@@ -45,6 +45,9 @@ public class NoteFileEntity implements Serializable {
 
     @Column(name = "file_path")
     private String filePath;
+    
+    @Column(name = "file_url")
+    private String fileUrl;
 
     @Column(name = "file_size")
     private Long fileSize;

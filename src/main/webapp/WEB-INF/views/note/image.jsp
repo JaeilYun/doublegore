@@ -45,8 +45,6 @@ $(document).ready(function() {
 	$('.submit a').on('click', function () { 
 		var form = $('#daumOpenEditorForm'); // form id값 
 		var fileName = $('.file input[type=file]').val(); // 파일명(절대경로명 또는 단일명)
-		console.log("@@@@" + form);
-		console.log("@@@@" + fileName);
 		form.ajaxSubmit({ 
 			type: 'POST', 
 			url: '/note/imageUpload', 
@@ -84,7 +82,7 @@ function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태
 		'imagealign': fileInfo.imagealign, 
 		'originalurl': fileInfo.originalurl, 
 		'thumburl': fileInfo.thumburl 
-	}; 
+	};
 	
 	execAttach(_mockdata); // 다음오픈에디터에 붙이기 
 	closeWindow(); // 이미지 팝업 종료 

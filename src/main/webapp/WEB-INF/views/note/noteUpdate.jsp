@@ -13,25 +13,26 @@
 							<div style="text-align: right;height: 50px;">
 								<input type="hidden" class="note-view-seq" value="">
 								<span style="padding: 3px;font-size: 16px;" class="note-view-back-btn">
-									<a href="#" class="note-view-menu-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+									<a href="#" class="note-view-menu-btn note-back-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
 								</span>
 								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="note-view-delete">
 									<a href="#" class="note-view-delete-btn" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">뒤로</a>
 								</span>
 								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="">
-									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">수정</a>
+									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">수정</a>
 								</span>
 							</div>
 						</div>
 					</div>
 					<div style="padding-top: 40px;padding-bottom: 40px;">
 						<div class="widget-content">
-							<form name="tx_editor_form" id="tx_editor_form" action="/note/insertNote" method="post" accept-charset="utf-8">
+							<form name="tx_editor_form" id="tx_editor_form" action="/note/updateNote" method="post" accept-charset="utf-8">
+								<input type="hidden" id="seq" name="seq" value="${note.seq}">
 								<div class="form-horizontal" style="padding-bottom: 30px;">
 									<div class="form-group">
 										<label class="col-md-1 control-label">Title</label>
 										<div class="col-md-11">
-											<input type="text" name="title" class="form-control" placeholder="Title">
+											<input type="text" id="title" name="title" class="form-control" placeholder="Title" value="${note.title}">
 										</div>
 									</div>
 									<div class="form-group">
@@ -39,7 +40,14 @@
 										<div class="col-md-11">
 											<select name="select" id="select2" class="form-control">
 												<c:forEach var="list" items="${categoryList}">
-													<option value="${list.seq}">${list.type}</option>
+													<c:choose>
+														<c:when test="${list.seq eq note.seq }">
+															<option value="${list.seq}" selected="selected">${list.type}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${list.seq}">${list.type}</option>	
+														</c:otherwise>
+													</c:choose>
 												</c:forEach>
 											</select>
 										</div>
@@ -68,6 +76,7 @@
 
 <script>
 $(document).ready(function() {
+	loadContent();
 	$(".note-back-btn").on('click',function(){
 		$("#backForm").submit();
 	});
@@ -160,21 +169,21 @@ function setForm(editor) {
 	
 	/* 아래의 코드는 첨부된 데이터를 필드를 생성하여 값을 할당하는 부분으로 상황에 맞게 수정하여 사용한다.
    	 첨부된 데이터 중에 주어진 종류(image,file..)에 해당하는 것만 배열로 넘겨준다. */
-	/* var images = editor.getAttachments('image');
+	var images = editor.getAttachments('image');
 	for (i = 0; i < images.length; i++) {
 	    // existStage는 현재 본문에 존재하는지 여부
 	    if (images[i].existStage) {
 	        // data는 팝업에서 execAttach 등을 통해 넘긴 데이터
-	        alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
+	        //alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
 	        input = document.createElement('input');
 	        input.type = 'hidden';
-	        input.name = 'attach_image';
-	        input.value = images[i].data.imageurl;  // 예에서는 이미지경로만 받아서 사용
+	        input.name = 'attachImage';
+	        input.value = images[i].data.filename;  // 예에서는 이미지경로만 받아서 사용
 	        form.createField(input);
 	    }
 	}
 	
-	var files = editor.getAttachments('file');
+	/* var files = editor.getAttachments('file');
 	for (i = 0; i < files.length; i++) {
 	    input = document.createElement('input');
 	    input.type = 'hidden';
@@ -185,5 +194,56 @@ function setForm(editor) {
 	
 	return true; 
 }
-  
+
+function loadContent() {
+	$.ajax({
+        url: '/note/loadNote',
+        data: {
+            "seq" : $("#seq").val()
+        },
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: function (result) {
+        	var attachments = {};
+        	attachments['image'] = [];
+        	
+        	for(var i = 0; i < result.fileList.length; i++) {
+        		attachments['image'].push({
+            		'attacher': 'image',
+            		'data': {
+            			'imageurl': result.fileList[i].fileUrl,
+            			'filename': result.fileList[i].fileName,
+            			'filesize': result.fileList[i].fileSize,
+            			'originalurl': result.fileList[i].filePath,
+            			'thumburl': result.fileList[i].filePath
+            		}
+            	});
+        	}
+        	
+        	/* attachments['file'] = [];
+        	attachments['file'].push({
+        		'attacher': 'file',
+        		'data': {
+        			'attachurl': 'http://cfile297.uf.daum.net/attach/207C8C1B4AA4F5DC01A644',
+        			'filemime': 'image/gif',
+        			'filename': 'editor_bi.gif',
+        			'filesize': 640
+        		}
+        	}); */
+        	/* 저장된 컨텐츠를 불러오기 위한 함수 호출 */
+        	Editor.modify({
+        		"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
+        			var allattachments = [];
+        			for (var i in attachments) {
+        				allattachments = allattachments.concat(attachments[i]);
+        			}
+        			return allattachments;
+        		}(),
+        		"content": document.getElementById("contents_source") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+        	});
+        }
+	});
+}
 </script>
+
+<textarea id="contents_source" style="display:none;">${note.contents}</textarea>

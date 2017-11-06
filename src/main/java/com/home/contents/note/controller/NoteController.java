@@ -3,6 +3,7 @@ package com.home.contents.note.controller;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,6 +28,7 @@ import com.home.common.types.MenuTypes;
 import com.home.contents.note.entity.NoteCategoryEntity;
 import com.home.contents.note.entity.NoteCategoryForm;
 import com.home.contents.note.entity.NoteEntity;
+import com.home.contents.note.entity.NoteFileEntity;
 import com.home.contents.note.entity.NoteForm;
 import com.home.contents.note.service.NoteService;
 
@@ -83,20 +85,33 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value = "/selectNote")
-	public @ResponseBody NoteEntity selectNoate(Long seq){
+	public @ResponseBody NoteEntity selectNote(Long seq){
 		log.debug("[FileController] selectNote()");
 		NoteEntity note = noteService.findNote(seq);
 		return note;
 	}
 	
+	@RequestMapping(value = "/loadNote")
+	public @ResponseBody Map<String, Object> loadNote(Long seq){
+		log.debug("[FileController] loadNote()");
+		NoteEntity note = noteService.findNote(seq);
+		List<NoteFileEntity> fileList = noteService.findNoteFileList(note);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("note", note);
+		map.put("fileList", fileList);
+		
+		return map;
+	}
+	
 	@RequestMapping(value = "/editNote")
-	public ModelAndView editNote(Long seq){
+	public ModelAndView editNote(Long editSeq){
 		log.debug("[FileController] editNote()");
 		ModelAndView mav = new ModelAndView("note/noteUpdate");
-		NoteEntity note = noteService.findNote(seq);
-		List<NoteCategoryEntity> categoryList = noteService.findNoteCategoryList();
-		mav.addObject("categoryList", categoryList);
+		List<NoteCategoryForm> categoryList = noteService.findNoteCategoryFormList();
+		NoteEntity note = noteService.findNote(editSeq);
 		mav.addObject("note", note);
+		mav.addObject("categoryList", categoryList);
 		return mav;
 	}
 	
@@ -121,7 +136,23 @@ public class NoteController {
 	public String insertNote(NoteForm form) {
 		log.debug("[NoteController] insertNote()");
 
-		noteService.insertNote(form);
+		NoteEntity note = noteService.insertNote(form);
+		if(form.getAttachImage() != null && form.getAttachImage().length > 0) {
+			noteService.insertNoteFile(note, form);
+		}
+		return "redirect:/note/main";
+	}
+	
+	@Menu(type = MenuTypes.NOTE)
+	@Breadcrumb(values = { "note.main" })
+	@RequestMapping(value = "/updateNote")
+	public String updateNote(NoteForm form) {
+		log.debug("[NoteController] updateNote()");
+
+		NoteEntity note = noteService.updateNote(form);
+		if(form.getAttachImage() != null && form.getAttachImage().length > 0) {
+			noteService.updateNoteFile(note, form);
+		}
 		return "redirect:/note/main";
 	}
 	

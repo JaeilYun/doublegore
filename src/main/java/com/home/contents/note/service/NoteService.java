@@ -62,6 +62,10 @@ public class NoteService {
     	return noteRepository.findOne(seq);
     }
     
+    public List<NoteFileEntity> findNoteFileList(NoteEntity note) {
+    	return noteFileRepository.findByNoteEntity(note);
+    }
+    
     public void deleteNote(Long seq) {
     	noteRepository.delete(seq);
     }
@@ -78,7 +82,7 @@ public class NoteService {
         return formList;
     }
     
-    public void insertNote(NoteForm form) {
+    public NoteEntity insertNote(NoteForm form) {
     	Date date = new Date();
     	NoteCategoryEntity noteCategoryEntity = noteCategoryRepository.findOne(form.getSelect());
     	NoteEntity noteEntity = new NoteEntity();
@@ -88,7 +92,65 @@ public class NoteService {
     	noteEntity.setCreatedDate(date);
     	noteEntity.setUpdatedDate(date);
     	noteEntity.setIsDeleted("F");
-    	noteRepository.save(noteEntity);    	
+    	return noteRepository.save(noteEntity);    	
+    }
+    
+    public NoteEntity updateNote(NoteForm form) {
+    	NoteEntity note = this.findNote(form.getSeq());
+    	Date date = new Date();
+    	NoteCategoryEntity noteCategoryEntity = noteCategoryRepository.findOne(form.getSelect());
+    	note.setTitle(form.getTitle());
+    	note.setNoteCategory(noteCategoryEntity);
+    	note.setContents(form.getContent());
+    	note.setUpdatedDate(date);
+    	note.setIsDeleted("F");
+    	return note;
+    }
+    
+    public void insertNoteFile(NoteEntity note, NoteForm form) {
+    	//노트파일에 note_seq 추가
+    	List<NoteFileEntity> noteFileList = noteFileRepository.findByFileNameIn(form.getAttachImage());
+    	for(NoteFileEntity noteFile : noteFileList) {
+    		noteFile.setNoteEntity(note);
+    	}
+    	
+    	//노트파일 중 note_seq없는것 삭제
+    	List<NoteFileEntity> deleteNoteFileList = noteFileRepository.findByNoteEntityIsNull();
+    	for(NoteFileEntity noteFile : deleteNoteFileList) {
+    		//파일 삭제
+    		String s = noteFile.getFilePath();
+    	    File f = new File(s);
+    	    if (f.exists()) {
+    	    	f.delete();
+    	    }
+    	    //DB삭제
+    		noteFileRepository.delete(noteFile);
+    	}
+    }
+    
+    public void updateNoteFile(NoteEntity note, NoteForm form) {
+    	//기존 파일 삭제
+    	List<NoteFileEntity> deleteFileList = noteFileRepository.findByNoteEntity(note);
+    	noteFileRepository.delete(deleteFileList);
+    	
+    	//노트파일에 note_seq 추가
+    	List<NoteFileEntity> noteFileList = noteFileRepository.findByFileNameIn(form.getAttachImage());
+    	for(NoteFileEntity noteFile : noteFileList) {
+    		noteFile.setNoteEntity(note);
+    	}
+    	
+    	//노트파일 중 note_seq없는것 삭제
+    	List<NoteFileEntity> deleteNoteFileList = noteFileRepository.findByNoteEntityIsNull();
+    	for(NoteFileEntity noteFile : deleteNoteFileList) {
+    		//파일 삭제
+    		String s = noteFile.getFilePath();
+    	    File f = new File(s);
+    	    if (f.exists()) {
+    	    	f.delete();
+    	    }
+    	    //DB삭제
+    		noteFileRepository.delete(noteFile);
+    	}
     }
     
     public List<NoteCategoryEntity> updateCategory(List<String> arr) {
@@ -164,6 +226,7 @@ public class NoteService {
     	        file.setFileName(fileName);
     	        file.setContentType(multipartFile.getContentType());
     	        file.setFilePath(uploadPath+saveFilePath);
+    	        file.setFileUrl(environment.getRequiredProperty("note.file.path") + saveFilePath.replaceAll("/", "\\\\"));
     	        file.setFileKey(genId);
     	        file.setFileSize(multipartFile.getSize());
     	        file.setCreatedDate(date);

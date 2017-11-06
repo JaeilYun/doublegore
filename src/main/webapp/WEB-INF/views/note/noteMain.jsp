@@ -4,6 +4,7 @@
 <div class="col-lg-3"></div>
 <div id="main-content-wrapper" class="col-lg-6">
 	<div class="content">
+		<!-- 메인화면 시작 -->
 		<div class="main-content note-list-div" style="display: block;padding-top: 20px;">
 			<div class="widget-content bottom-30px">
 				<div class="row">
@@ -35,6 +36,9 @@
 				<ul class="pagination" style="font-size: 20px;"></ul>
 			</div>
 		</div>
+		<!-- 메인화면 끝 -->
+		
+		<!-- 상세화면 시작 -->
 		<div class="main-content note-view-div" style="display: none;">
 			<div class="row">
 				<div class="col-md-12">
@@ -42,7 +46,6 @@
 					<div style="padding-top: 30px;padding-bottom: 40px;">
 						<div class="widget-content" style="text-align: center;">
 							<div style="text-align: right;height: 50px;">
-								<input type="hidden" class="note-view-seq" value="">
 								<span style="padding: 3px;font-size: 16px;" class="note-view-back-btn">
 									<a href="#" class="note-view-menu-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
 								</span>
@@ -68,6 +71,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 상세화면 끝 -->
 	</div>
 </div>
 <!-- END CONTENT WRAPPER -->
@@ -99,6 +103,10 @@
 </div>
 
 <form id="registerForm" name="registerForm" method="post" action="/note/register">
+</form>
+
+<form id="editForm" name="editForm" method="post" action="/note/editNote">
+	<input type="hidden" name="editSeq" class="note-edit-seq" value="">
 </form>
 
 <form id="submitForm" name="submitForm" method="post" action="">
@@ -197,7 +205,7 @@
     	});
     	
     	$(".note-view-edit-btn").on('click', function(){
-    		
+    		$("#editForm").submit();
     	});
     });
 
@@ -237,49 +245,60 @@
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
             	if(result.content.length == 0) {
-            		pagingClick((result.number-1) < 0 ? 0 : (result.number-1));
-            	}
-        		var noteStr = "";
-        		var pagingStr = "";
-        		$(".noteList").empty();
-        		$(".pagination").empty();
-        		$("#page").val(result.number);
-        		
-        		noteStr += '<div style="border-bottom:1px solid #ddd"></div>';
-        		for(var i = 0; i < result.content.length; i++){
-        			noteStr += '<a href="#" onClick="noteView('+result.content[i].seq+')" style="text-decoration:none !important;"><div class="note-list-hover" style="padding: 8px;border-right: 1px solid white; border-left: 1px solid white;">';
-        			noteStr += '<div class="widget-content" style="padding-bottom:15px;">';
-        			noteStr += '<h3 style="font-weight: 500;color:#555 !important;padding-bottom: 10px;">'+result.content[i].title+'</h3>';
-        			noteStr += '<div style="color:#555 !important;">'+result.content[i].contents+'</div>';
-        			noteStr += '<div>';
-        			noteStr += '<span style="color: #1D92AF !important;font-weight: 500;">'+result.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+result.content[i].updatedDate+'</span>';
-        			noteStr += '</div></div></div></a><div style="border-bottom:1px solid #ddd"></div>';
-        		}
-        		$(".noteList").append(noteStr);
-        		
-        		var startPage = (result.number < 5) ? 1 : result.number-3;
-        		var endPage = (result.totalPages < result.number+6) ? result.totalPages : result.number+5;
-        		var prePage = (result.number < 5) ? 0 : result.number-5;
-        		var postPage = (result.totalPages < result.number+6) ? result.totalPages-1 : result.number+5
+            		if(result.number == 0) {
+            			var pagingStr = "";
+                		$(".pagination").empty();
+                		$("#page").val(result.number);
+                		pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
+                		pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
+                		$(".pagination").append(pagingStr);
+            		} else {
 
-    			if(result.first == true) {
-    				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
-    			} else {
-    				pagingStr += '<li><a href="#" onClick="pagingClick('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
-    			}
-        		for(var i = startPage; i < endPage+1; i++) {
-        			if(i == result.number+1) {
-        				pagingStr += '<li class="active"><a href="#" onClick="return false">'+(i)+'</a></li>';
+                		pagingClick((result.number-1) < 0 ? 0 : (result.number-1));
+            		}
+            	} else {
+            		var noteStr = "";
+            		var pagingStr = "";
+            		$(".noteList").empty();
+            		$(".pagination").empty();
+            		$("#page").val(result.number);
+            		
+            		noteStr += '<div style="border-bottom:1px solid #ddd"></div>';
+            		for(var i = 0; i < result.content.length; i++){
+            			noteStr += '<a href="#" onClick="noteView('+result.content[i].seq+')" style="text-decoration:none !important;"><div class="note-list-hover" style="padding: 8px;border-right: 1px solid white; border-left: 1px solid white;">';
+            			noteStr += '<div class="widget-content" style="padding-bottom:15px;">';
+            			noteStr += '<h3 style="font-weight: 500;color:#555 !important;padding-bottom: 10px;">'+result.content[i].title+'</h3>';
+            			noteStr += '<div style="color:#555 !important;">'+result.content[i].contents+'</div>';
+            			noteStr += '<div>';
+            			noteStr += '<span style="color: #1D92AF !important;font-weight: 500;">'+result.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+result.content[i].updatedDate+'</span>';
+            			noteStr += '</div></div></div></a><div style="border-bottom:1px solid #ddd"></div>';
+            		}
+            		$(".noteList").append(noteStr);
+            		
+            		var startPage = (result.number < 5) ? 1 : result.number-3;
+            		var endPage = (result.totalPages < result.number+6) ? result.totalPages : result.number+5;
+            		var prePage = (result.number < 5) ? 0 : result.number-5;
+            		var postPage = (result.totalPages < result.number+6) ? result.totalPages-1 : result.number+5
+
+        			if(result.first == true) {
+        				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
         			} else {
-        				pagingStr += '<li><a href="#" onClick="pagingClick('+(i-1)+');">'+(i)+'</a></li>';
+        				pagingStr += '<li><a href="#" onClick="pagingClick('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
         			}
-        		}
-        		if(result.last == true) {
-    				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
-    			} else {
-    				pagingStr += '<li><a href="#" onClick="pagingClick('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
-    			}
-        		$(".pagination").append(pagingStr);
+            		for(var i = startPage; i < endPage+1; i++) {
+            			if(i == result.number+1) {
+            				pagingStr += '<li class="active"><a href="#" onClick="return false">'+(i)+'</a></li>';
+            			} else {
+            				pagingStr += '<li><a href="#" onClick="pagingClick('+(i-1)+');">'+(i)+'</a></li>';
+            			}
+            		}
+            		if(result.last == true) {
+        				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
+        			} else {
+        				pagingStr += '<li><a href="#" onClick="pagingClick('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
+        			}
+            		$(".pagination").append(pagingStr);
+            	}
             }
         });
 	}
@@ -293,7 +312,7 @@
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
-            	$(".note-view-seq").val(result.seq);
+            	$(".note-edit-seq").val(result.seq);
             	$(".note-view-category").text(result.noteCategory.type);
             	$(".note-view-title").text(result.title);
             	$(".note-view-date").text(result.updatedDate);
@@ -313,7 +332,7 @@
 		$.ajax({
             url: '/note/deleteNote',
             data: {
-                "seq" : $(".note-view-seq").val(),
+                "seq" : $(".note-edit-seq").val(),
                 "page" : $("#page").val()
             },
             type: 'POST',
@@ -324,5 +343,4 @@
             }
 		});
 	});
-
 </script>
