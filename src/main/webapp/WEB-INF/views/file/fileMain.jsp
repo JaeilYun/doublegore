@@ -720,7 +720,7 @@
                     $("#lightgallery").append(str);
                     $("#lightgallery").data('lightGallery').destroy(true);
                     $("#lightgallery").lightGallery({
-						mode: 'lg-slide-skew-rev',
+						mode: 'lg-fade',
                         actualSize: false,
 						speed: 300,
 						share: false,
