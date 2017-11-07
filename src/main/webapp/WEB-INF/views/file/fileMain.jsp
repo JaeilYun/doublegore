@@ -539,6 +539,7 @@
                     fileTable.rows(rows).remove().draw();
                     dataTableCountCheck();
                     setFileAdded();
+                    $(".prev-image").css("display","none");
                     $(".delete-modal-btn").click();
                 }
             });

@@ -33,6 +33,8 @@ import com.home.contents.note.repository.NoteRepository;
 @Transactional
 public class NoteService {
     private static final Logger logger = LoggerFactory.getLogger(NoteService.class);
+    public static final long IMAGE_SIZE = 10;
+    public static final long FILE_SIZE = 20;
 
     @Autowired
     NoteCategoryRepository noteCategoryRepository;
@@ -215,26 +217,25 @@ public class NoteService {
 		String genId = UUID.randomUUID().toString().replace("-", "");
 		String fileName = genId + "." + originalNameExtension;
         try {
-        	long limitFileSize = 5*1024*1024; // 5MB
+        	long limitFileSize = type.equals("image") ? IMAGE_SIZE*1024*1024 : FILE_SIZE*1024*1024; // 10MB or 20MB
         	// 업로드 파일이 존재하면 
     		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) {
     			long fileSize = multipartFile.getSize();
     			if(type.equals("image")) {
-    				if( !( (originalNameExtension.equals("jpg")) || 
-        					(originalNameExtension.equals("jpeg")) || 
-        					(originalNameExtension.equals("gif")) || 
-        					(originalNameExtension.equals("png")) || 
-        					(originalNameExtension.equals("bmp")) ) ){ 
+    				if( !( (originalNameExtension.toLowerCase().equals("jpg")) || 
+        					(originalNameExtension.toLowerCase().equals("jpeg")) || 
+        					(originalNameExtension.toLowerCase().equals("gif")) || 
+        					(originalNameExtension.toLowerCase().equals("png")) || 
+        					(originalNameExtension.toLowerCase().equals("bmp")) ) ){ 
         				fileInfo.put("result", -1); // 허용 확장자가 아닐 경우 
         				return fileInfo;
         			} 
-    			} else {
-    				if(limitFileSize < fileSize){ // 제한보다 파일크기가 클 경우 
-    					fileInfo.put("result", -1); 
-    					return fileInfo; 
-    				}
     			}
     			
+    			if(limitFileSize < fileSize){ // 제한보다 파일크기가 클 경우 
+					fileInfo.put("result", -2); 
+					return fileInfo; 
+				}
 
     	        String uploadPath = environment.getRequiredProperty("app.home") + environment.getRequiredProperty("note.file.path");
     	        String saveFilePath = FileUtils.fileSave(uploadPath, multipartFile, genId, type);

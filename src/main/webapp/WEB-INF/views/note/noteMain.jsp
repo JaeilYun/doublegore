@@ -45,6 +45,22 @@
 	</div>
 </div>
 
+<button class="btn btn-primary btn-lg delete-modal-btn" data-toggle="modal" data-target="#deleteModal" style="display: none;"></button>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width: 400px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myDeleteModalLabel">정말로 삭제하시겠습니까?</h4>
+			</div>
+			<div style="padding: 15px; text-align: right;">
+				<button type="button" class="btn btn-danger delete-confirm-btn"><i class="fa fa-trash"></i> 삭제</button>
+				<button type="button" class="btn btn-default delete-modal-close-btn" data-dismiss="modal"><i class="fa fa-times-circle"></i> 닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- 메인화면 이동 -->
 <form id="mainForm" name="mainForm" method="post" action="/note/main">
 </form>
@@ -283,9 +299,14 @@
     	$("#mainForm").submit();
     }
 	
-    //노트 삭제
+    //노트 삭제 모달 열기
 	$(".note-view-delete").on('click', function(){
-		$.ajax({
+		$(".delete-modal-btn").click();
+	});
+    
+    //노트 삭제
+    $(".delete-confirm-btn").on('click', function(){
+    	$.ajax({
             url: '/note/deleteNote',
             data: {
                 "seq" : $("#seq").val(),
@@ -295,12 +316,13 @@
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
             	init(result);
+            	$(".delete-modal-close-btn").click();
             	$(".note-list-div").css("display","block");
         		$(".note-view-div").css("display","none");
         		$(".note-register-div").css("display","none");
             }
-		});
-	});
+    	});
+    });
     
     //글쓰기 버튼 클릭
     $(".register-btn").on('click', function(){

@@ -119,7 +119,7 @@ $(document).ready(function() {
 			},
 			
 			capacity: { 
-				maximum: 5*1024*1024 // 최대 첨부 용량 (5MB)
+				maximum: 20*1024*1024 // 최대 첨부 용량 (5MB)
 			}
 		}, 
 		size: { 

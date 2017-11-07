@@ -10,7 +10,7 @@
 	</div>	
 	<div class="body">
 		<dl class="alert">
-	    	<dt>nbsp;1MB이하 (JPG,GIF,PNG,BMP)</dt> 
+	    	<dt>&nbsp;10MB이하 (JPG,GIF,PNG,BMP)</dt> 
 	    	<dd> <form id="daumOpenEditorForm" encType="multipart/form-data" method="post" action=""> 
 	    	
 	    		<!-- 파일첨부 --> 
@@ -59,7 +59,7 @@ $(document).ready(function() {
 					alert('jpg, gif, png, bmp 확장자만 업로드 가능합니다.'); 
 					return false; 
 				} else if(fileInfo.result===-2) { // 서버단에서 체크 후 수행됨 
-					alert('파일이 1MB를 초과하였습니다.'); 
+					alert('파일이 10MB를 초과하였습니다.'); 
 					return false; 
 				} else { 
 					done(fileInfo); // 첨부한 이미지를 에디터에 적용시키고 팝업창을 종료 
@@ -77,6 +77,7 @@ function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태
 		return; 
 	} 
 	var _mockdata = { 
+		'width': "100%",
 		'imageurl': fileInfo.imageurl, 
 		'filename': fileInfo.filename, 
 		'filesize': fileInfo.filesize, 

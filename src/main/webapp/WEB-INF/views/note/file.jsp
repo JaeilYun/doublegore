@@ -10,7 +10,7 @@
 	</div>	
 	<div class="body">
 		<dl class="alert"> 
-			<dt>nbsp;5MB이하만 가능합니다.</dt> 
+			<dt>&nbsp;20MB이하만 가능합니다.</dt> 
 			<dd> 
 				<form id=daumOpenEditorForm encType=multipart/form-data method=post action=""> 
 					<!-- 파일첨부 --> 
@@ -53,8 +53,8 @@ $(document).ready(function (){
 			dataType: 'JSON', // 리턴되는 데이타 타입 
 			beforeSubmit: function() {}, 
 			success: function(fileInfo) { // fileInfo는 이미지 정보를 리턴하는 객체 
-				if(fileInfo.result==-1) { 
-					alert('파일이 5MB를 초과하였습니다.'); 
+				if(fileInfo.result==-2) { 
+					alert('파일이 20MB를 초과하였습니다.'); 
 					return false; 
 				} else {
 					console.log(fileInfo);
