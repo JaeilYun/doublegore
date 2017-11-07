@@ -1,76 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8" session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="col-lg-3"></div>
-<div id="main-content-wrapper" class="col-lg-6">
-	<div class="content">
-		<div class="main-content note-view-div">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- BASIC INPUT -->
-					<div style="padding-top: 30px;">
-						<div class="widget-content" style="text-align: center;">
-							<div style="text-align: right;height: 50px;">
-								<input type="hidden" class="note-view-seq" value="">
-								<span style="padding: 3px;font-size: 16px;" class="note-view-back-btn">
-									<a href="#" class="note-view-menu-btn note-back-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
-								</span>
-								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="">
-									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">저장</a>
-								</span>
+<div class="main-content note-register-div" style="display: none;">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BASIC INPUT -->
+			<div style="padding-top: 26px;">
+				<div class="widget-content" style="text-align: center;">
+					<div style="height: 50px;" class="register-mode">
+						<div class="col-md-6" style="text-align: left;">
+							<span style="padding: 3px;font-size: 20px;">
+								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+							</span>
+						</div>
+						<div class="col-md-6" style="text-align: right;">
+							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+								<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">저장</a>
+							</span>
+						</div>
+					</div>
+					<div style="text-align: right;height: 50px;" class="update-mode">
+						<div class="col-md-6" style="text-align: left;">
+							<span style="padding: 3px;font-size: 20px;">
+								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+							</span>
+						</div>
+						<div class="col-md-6" style="text-align: right;">
+							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+								<a href="#" class="note-view-delete-btn view-back" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">뒤로</a>
+							</span>
+							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+								<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">완료</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="padding-top: 40px;padding-bottom: 40px;">
+				<div class="widget-content">
+					<form name="tx_editor_form" id="tx_editor_form" action="/note/insertNote" method="post" accept-charset="utf-8">
+						<input type="hidden" id="seq" name="seq" value="">
+						<div class="form-horizontal" style="padding-bottom: 30px;">
+							<div class="form-group">
+								<label class="col-md-1 control-label">제목</label>
+								<div class="col-md-11">
+									<input type="text" id="title" name="title" class="form-control" placeholder="제목">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-1 control-label">카테고리</label>
+								<div class="col-md-11">
+									<select name="select" id="select2" class="form-control category-list"></select>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div style="padding-top: 40px;padding-bottom: 40px;">
-						<div class="widget-content">
-							<form name="tx_editor_form" id="tx_editor_form" action="/note/insertNote" method="post" accept-charset="utf-8">
-								<div class="form-horizontal" style="padding-bottom: 30px;">
-									<div class="form-group">
-										<label class="col-md-1 control-label">Title</label>
-										<div class="col-md-11">
-											<input type="text" name="title" class="form-control" placeholder="Title">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-1 control-label">Category</label>
-										<div class="col-md-11">
-											<select name="select" id="select2" class="form-control">
-												<c:forEach var="list" items="${categoryList}">
-													<option value="${list.seq}">${list.type}</option>
-												</c:forEach>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="form-horizontal">
-									<div style="margin-bottom: -10px;">
-											<jsp:include page="/WEB-INF/views/note/editor.jsp" flush="true"></jsp:include>
-									<script>
-									if('${board!=null}'=='true') Editor.modify({'content': '${board.board_content}'});
-									</script>
-									</div>
-								</div>
-							</form>
+						<div class="form-horizontal">
+							<div style="margin-bottom: -10px;">
+									<jsp:include page="/WEB-INF/views/note/editor.jsp" flush="true"></jsp:include>
+							</div>
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="col-lg-3"></div>
-
-<form id="backForm" name="backForm" method="post" action="/note/main">
-	<input type="hidden" id="page" name="page" value="${noteList.getNumber()}">
-	<input type="hidden" id="size" name="size" value="${noteList.getSize()}">
-</form>
 
 <script>
 $(document).ready(function() {
-	$(".note-back-btn").on('click',function(){
-		$("#backForm").submit();
-	});
-	
 	var config = { 
 		txHost: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */ 
 		txPath: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) /xxx/xxx/ */ 
@@ -114,6 +111,10 @@ $(document).ready(function() {
 				image:{ 
 					features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
 					popPageUrl:'/note/imagePopup' //팝업창 주소
+				},
+				file:{ 
+					features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
+					popPageUrl:'/note/filePopup' //팝업창 주소
 				}
 			},
 			
@@ -138,11 +139,59 @@ function saveContent() {
 function validForm(editor) { 
 	var validator = new Trex.Validator(); 
 	var content = editor.getContent(); 
+	if($("#title").val().length == 0) {
+		alert('제목을 입력하세요'); 
+		return false; 
+	}
+	if($(".category-list").val() == "ALL") {
+		alert('카테고리를 선택하세요'); 
+		return false; 
+	}
 	if (!validator.exists(content)) { 
 		alert('내용을 입력하세요'); 
 		return false; 
-	} 
+	}
 	return true; 
 }
-  
+
+function setForm(editor) {
+    var i, input;
+    var form = editor.getForm();
+    var content = editor.getContent();
+
+    // 본문 내용을 필드를 생성하여 값을 할당하는 부분
+    var textarea = document.createElement('textarea');
+    textarea.name = 'content';
+    textarea.value = content;
+    form.createField(textarea);
+
+    /* 아래의 코드는 첨부된 데이터를 필드를 생성하여 값을 할당하는 부분으로 상황에 맞게 수정하여 사용한다.
+     첨부된 데이터 중에 주어진 종류(image,file..)에 해당하는 것만 배열로 넘겨준다. */
+    var images = editor.getAttachments('image');
+    for (i = 0; i < images.length; i++) {
+        // existStage는 현재 본문에 존재하는지 여부
+        if (images[i].existStage) {
+            // data는 팝업에서 execAttach 등을 통해 넘긴 데이터
+            //alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'attach';
+            input.value = images[i].data.filename;  // 예에서는 이미지경로만 받아서 사용
+            form.createField(input);
+        }
+    }
+
+    var files = editor.getAttachments('file');
+    for (i = 0; i < files.length; i++) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'attach';
+        input.value = files[i].data.filename;
+        form.createField(input);
+    }
+    Editor.modify({content:" ", attachments:[]});
+    return true;
+}
+
 </script>
+<textarea id="contents_source" style="display:none;"></textarea>

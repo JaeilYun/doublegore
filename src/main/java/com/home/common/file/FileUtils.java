@@ -38,14 +38,16 @@ public class FileUtils {
         saveThumbPath = makeDir(uploadPath, nodeId + File.separatorChar + "thumbnail");
 
         File target = new File(uploadPath + savePath, saveFileName);
-        File thumbnailTarget = new File(uploadPath + saveThumbPath, saveThumbFileName);
 
         FileCopyUtils.copy(multipartFile.getBytes(), target);
-        if(fileExtension.equals("jpg") || fileExtension.equals("jpeg") || fileExtension.equals("png") ||
-                fileExtension.equals("gif") || fileExtension.equals("bmp")){
-            if (target.exists()) {
-                thumbnailTarget.getParentFile().mkdirs();
-                Thumbnails.of(target).crop(Positions.CENTER).size(200, 200).keepAspectRatio(true).toFile(thumbnailTarget);
+        if(!nodeId.equals("image")) {
+            File thumbnailTarget = new File(uploadPath + saveThumbPath, saveThumbFileName);
+            if(fileExtension.equals("jpg") || fileExtension.equals("jpeg") || fileExtension.equals("png") ||
+                    fileExtension.equals("gif") || fileExtension.equals("bmp")){
+                if (target.exists()) {
+                    thumbnailTarget.getParentFile().mkdirs();
+                    Thumbnails.of(target).crop(Positions.CENTER).size(200, 200).keepAspectRatio(true).toFile(thumbnailTarget);
+                }
             }
         }
 

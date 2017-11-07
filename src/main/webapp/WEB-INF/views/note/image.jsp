@@ -3,6 +3,7 @@
 <link href="${contextRoot}/assets/css/popup.css" rel="stylesheet" type="text/css">
 <script src="${contextRoot}/assets/js/popup.js"></script>
 <script src="${contextRoot}/assets/js/jquery.form.min.js"></script>
+
 <div class="wrapper">
 	<div class="header">
 		<h1>사진 첨부</h1>
@@ -45,8 +46,6 @@ $(document).ready(function() {
 	$('.submit a').on('click', function () { 
 		var form = $('#daumOpenEditorForm'); // form id값 
 		var fileName = $('.file input[type=file]').val(); // 파일명(절대경로명 또는 단일명)
-		console.log("@@@@" + form);
-		console.log("@@@@" + fileName);
 		form.ajaxSubmit({ 
 			type: 'POST', 
 			url: '/note/imageUpload', 
@@ -73,7 +72,7 @@ $(document).ready(function() {
 });
 
 //첨부한 이미지를 에디터에 적용시키는 함수 
-function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태의 데이터를 담을 객체 
+function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태의 데이터를 담을 객체
 	if (typeof(execAttach) == 'undefined') { 
 		return; 
 	} 
@@ -84,7 +83,7 @@ function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태
 		'imagealign': fileInfo.imagealign, 
 		'originalurl': fileInfo.originalurl, 
 		'thumburl': fileInfo.thumburl 
-	}; 
+	};
 	
 	execAttach(_mockdata); // 다음오픈에디터에 붙이기 
 	closeWindow(); // 이미지 팝업 종료 
@@ -92,19 +91,18 @@ function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태
 
 //잘못된 경로로 접근할 때 호출되는 함수
 function initUploader(){
-		var _opener = PopupUtil.getOpener();
-		if (!_opener) {
-		alert('잘못된 경로로 접근하셨습니다.');
-    		return;
-		}
-	
-		var _attacher = getAttacher('image', _opener);
-		registerAction(_attacher);
+	var _opener = PopupUtil.getOpener();
+	if (!_opener) {
+	alert('잘못된 경로로 접근하셨습니다.');
+   		return;
+	}
+
+	var _attacher = getAttacher('image', _opener);
+	registerAction(_attacher);
 }
 
 //확장자 체크 (서버단에서도 검사함) 
 function validation(fileName) {
-	console.log(fileName);
 	var fileNameExtensionIndex = fileName.lastIndexOf('.') + 1; // .뒤부터 확장자 
 	var fileNameExtension = fileName.toLowerCase().substring(fileNameExtensionIndex,fileName.length); // 확장자 자르기 
 	

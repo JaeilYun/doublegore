@@ -399,7 +399,7 @@
 		<div id="tx_attach_box" class="tx-attach-box">
 			<div class="tx-attach-box-inner">
 				<div id="tx_attach_preview" class="tx-attach-preview"><p></p>
-				<img src="${contextRoot}/assets/img/editor/icon/editor/pn_preview.gif" width="147" height="108" unselectable="on"/></div>
+				<img src="${contextRoot}/assets/img/editor/icon/editor/pn_preview.gif" width="100%" height="100%" unselectable="on"/></div>
 				<div class="tx-attach-main">
 					<div id="tx_upload_progress" class="tx-upload-progress"><div>0%</div><p>파일을 업로드하는 중입니다.</p></div>
 					<ul class="tx-attach-top">

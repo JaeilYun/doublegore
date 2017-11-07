@@ -2,6 +2,7 @@ package com.home.contents.note.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -50,8 +51,13 @@ public class NoteService {
         return noteCategoryRepository.findOne(seq);
     }
 
-    public Page<NoteEntity> findNoteAll(PageRequest request) {
-        return noteRepository.findByIsDeleted("F", request);
+    public Page<NoteEntity> findNoteAll(PageRequest request, String categorySeq) {
+    	if(categorySeq.equals("ALL")) {
+    		return noteRepository.findByIsDeleted("F", request);
+    	} else {
+    		NoteCategoryEntity category = noteCategoryRepository.findOne(Long.parseLong(categorySeq));
+    		return noteRepository.findByIsDeletedAndNoteCategory("F", category, request);
+    	}
     }
     
     public List<NoteEntity> findByNoteCategory(NoteCategoryEntity entity) {
@@ -62,8 +68,24 @@ public class NoteService {
     	return noteRepository.findOne(seq);
     }
     
+    public List<NoteFileEntity> findNoteFileList(NoteEntity note) {
+    	return noteFileRepository.findByNoteEntity(note);
+    }
+    
     public void deleteNote(Long seq) {
-    	noteRepository.delete(seq);
+    	NoteEntity note = this.findNote(seq);
+    	List<NoteFileEntity> fileList = noteFileRepository.findByNoteEntity(note);
+    	for(NoteFileEntity file : fileList) {
+    		//파일 삭제
+    		String s = file.getFilePath();
+    	    File f = new File(s);
+    	    if (f.exists()) {
+    	    	f.delete();
+    	    }
+			noteFileRepository.delete(file);
+    	}
+    	
+    	noteRepository.delete(note);
     }
     
     public List<NoteCategoryForm> findNoteCategoryFormList() {
@@ -78,7 +100,7 @@ public class NoteService {
         return formList;
     }
     
-    public void insertNote(NoteForm form) {
+    public NoteEntity insertNote(NoteForm form) {
     	Date date = new Date();
     	NoteCategoryEntity noteCategoryEntity = noteCategoryRepository.findOne(form.getSelect());
     	NoteEntity noteEntity = new NoteEntity();
@@ -88,7 +110,45 @@ public class NoteService {
     	noteEntity.setCreatedDate(date);
     	noteEntity.setUpdatedDate(date);
     	noteEntity.setIsDeleted("F");
-    	noteRepository.save(noteEntity);    	
+    	return noteRepository.save(noteEntity);    	
+    }
+    
+    public NoteEntity updateNote(NoteForm form) {
+    	NoteEntity note = this.findNote(form.getSeq());
+    	Date date = new Date();
+    	NoteCategoryEntity noteCategoryEntity = noteCategoryRepository.findOne(form.getSelect());
+    	note.setTitle(form.getTitle());
+    	note.setNoteCategory(noteCategoryEntity);
+    	note.setContents(form.getContent());
+    	note.setUpdatedDate(date);
+    	note.setIsDeleted("F");
+    	return note;
+    }
+    
+    public void insertNoteFile(NoteEntity note, NoteForm form) {
+    	//노트파일에 note_seq 추가
+    	List<NoteFileEntity> noteFileList = noteFileRepository.findByFileNameIn(form.getAttach());
+    	for(NoteFileEntity noteFile : noteFileList) {
+    		noteFile.setNoteEntity(note);
+    	}
+    	
+    	//노트파일 중 note_seq없는것 삭제
+    	List<NoteFileEntity> deleteNoteFileList = noteFileRepository.findByNoteEntityIsNull();
+    	for(NoteFileEntity noteFile : deleteNoteFileList) {
+    		noteFileDelete(noteFile);
+    	}
+    }
+    
+    public void updateNoteFile(NoteEntity note, NoteForm form) {
+    	//기존 파일 삭제
+    	List<NoteFileEntity> deleteFileList = noteFileRepository.findByNoteEntity(note);
+    	List<String> updateForm = Arrays.asList(form.getAttach());
+		for(NoteFileEntity file : deleteFileList) {
+			if(!updateForm.contains(file.getFileName())) {
+				noteFileDelete(file);
+			}
+		}
+		this.insertNoteFile(note, form);
     }
     
     public List<NoteCategoryEntity> updateCategory(List<String> arr) {
@@ -130,9 +190,20 @@ public class NoteService {
     	}
 		return result;
 	}
+	
+	public void noteFileDelete(NoteFileEntity noteFile) {
+		//파일 삭제
+		String s = noteFile.getFilePath();
+	    File f = new File(s);
+	    if (f.exists()) {
+	    	f.delete();
+	    }
+	    //DB삭제
+		noteFileRepository.delete(noteFile);
+	}
 
     //게시글 첨부파일 저장
-    public HashMap<String, Object> insertFile(MultipartFile multipartFile) {
+    public HashMap<String, Object> insertFile(MultipartFile multipartFile, String type) {
         logger.debug("Inserting File - insertFile({})");
 
         HashMap<String, Object> fileInfo = new HashMap<String, Object>(); // CallBack할 때 이미지 정보를 담을 Map 
@@ -144,26 +215,36 @@ public class NoteService {
 		String genId = UUID.randomUUID().toString().replace("-", "");
 		String fileName = genId + "." + originalNameExtension;
         try {
+        	long limitFileSize = 5*1024*1024; // 5MB
         	// 업로드 파일이 존재하면 
-    		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) { 
+    		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) {
+    			long fileSize = multipartFile.getSize();
+    			if(type.equals("image")) {
+    				if( !( (originalNameExtension.equals("jpg")) || 
+        					(originalNameExtension.equals("jpeg")) || 
+        					(originalNameExtension.equals("gif")) || 
+        					(originalNameExtension.equals("png")) || 
+        					(originalNameExtension.equals("bmp")) ) ){ 
+        				fileInfo.put("result", -1); // 허용 확장자가 아닐 경우 
+        				return fileInfo;
+        			} 
+    			} else {
+    				if(limitFileSize < fileSize){ // 제한보다 파일크기가 클 경우 
+    					fileInfo.put("result", -1); 
+    					return fileInfo; 
+    				}
+    			}
     			
-    			if( !( (originalNameExtension.equals("jpg")) || 
-    					(originalNameExtension.equals("jpeg")) || 
-    					(originalNameExtension.equals("gif")) || 
-    					(originalNameExtension.equals("png")) || 
-    					(originalNameExtension.equals("bmp")) ) ){ 
-    				fileInfo.put("result", -1); // 허용 확장자가 아닐 경우 
-    				return fileInfo;
-    			} 
 
     	        String uploadPath = environment.getRequiredProperty("app.home") + environment.getRequiredProperty("note.file.path");
-    	        String saveFilePath = FileUtils.fileSave(uploadPath, multipartFile, genId, "image");
+    	        String saveFilePath = FileUtils.fileSave(uploadPath, multipartFile, genId, type);
 
     	        Date date = new Date();
     	        NoteFileEntity file = new NoteFileEntity();
     	        file.setFileName(fileName);
     	        file.setContentType(multipartFile.getContentType());
     	        file.setFilePath(uploadPath+saveFilePath);
+    	        file.setFileUrl(environment.getRequiredProperty("note.file.path") + saveFilePath.replaceAll("/", "\\\\"));
     	        file.setFileKey(genId);
     	        file.setFileSize(multipartFile.getSize());
     	        file.setCreatedDate(date);
@@ -172,14 +253,23 @@ public class NoteService {
     	        file = noteFileRepository.save(file);
     			
     			// CallBack - Map에 담기 
-    			String imageurl = environment.getRequiredProperty("note.file.path") + File.separator + "image" +File.separator + fileName; // separator와는 다름! 
-    			fileInfo.put("imageurl", imageurl); // 상대파일경로(사이즈변환이나 변형된 파일) 
-    			fileInfo.put("filename", fileName); // 파일명 
-    			fileInfo.put("filesize", multipartFile.getSize()); // 파일사이즈
-    			fileInfo.put("imagealign", "C"); // 이미지정렬(C:center) 
-    			fileInfo.put("originalurl", imageurl); // 실제파일경로 
-    			fileInfo.put("thumburl", imageurl); // 썸네일파일경로(사이즈변환이나 변형된 파일) 
-    			fileInfo.put("result", 1); // -1, -2를 제외한 아무거나 싣어도 됨 
+    			String fileUrl = environment.getRequiredProperty("note.file.path") + File.separator + type +File.separator + fileName; // separator와는 다름! 
+    			if(type.equals("image")) {
+    				fileInfo.put("imageurl", fileUrl); // 상대파일경로(사이즈변환이나 변형된 파일) 
+        			fileInfo.put("filename", fileName); // 파일명 
+        			fileInfo.put("filesize", fileSize); // 파일사이즈
+        			fileInfo.put("imagealign", "C"); // 이미지정렬(C:center) 
+        			fileInfo.put("originalurl", fileUrl); // 실제파일경로 
+        			fileInfo.put("thumburl", fileUrl); // 썸네일파일경로(사이즈변환이나 변형된 파일) 
+        			fileInfo.put("result", 1); // -1, -2를 제외한 아무거나 싣어도 됨 
+    			} else {
+    				fileInfo.put("attachurl", fileUrl); // 상대파일경로(사이즈변환이나 변형된 파일) 
+    				fileInfo.put("filemime", multipartFile.getContentType()); // mime 
+    				fileInfo.put("filename", fileName); // 파일명 
+    				fileInfo.put("filesize", multipartFile.getSize()); // 파일사이즈 
+    				fileInfo.put("result", 1); // -1을 제외한 아무거나 싣어도 됨
+    			}
+    			
     		} else {
     			throw new Exception("Failed to store empty file " + fileName);
     		}

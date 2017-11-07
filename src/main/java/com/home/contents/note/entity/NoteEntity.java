@@ -58,10 +58,6 @@ public class NoteEntity implements Serializable{
 	@Column(name = "is_deleted")
 	private String isDeleted;
 	
-	@OneToMany(mappedBy = "noteEntity")
-	@JsonManagedReference
-	private List<NoteFileEntity> noteFiles = new ArrayList<>();
-	
 	@ManyToOne
 	@JsonManagedReference
 	@JoinColumn(name = "category_seq")

@@ -4,70 +4,17 @@
 <div class="col-lg-3"></div>
 <div id="main-content-wrapper" class="col-lg-6">
 	<div class="content">
-		<div class="main-content note-list-div" style="display: block;padding-top: 20px;">
-			<div class="widget-content bottom-30px">
-				<div class="row">
-					<div class="col-md-3" style="text-align: left;margin-bottom: 5px;">
-						<div class="form-control" style="border: none;">
-							<span style="padding: 3px;font-size: 20px;" class="register-btn">
-								<a href="#" class="note-list-new-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">글쓰기</a>
-							</span>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<select class="form-control note-select">
-							<c:forEach var="list" items="${categoryList}">
-								<option value="${list.seq}">${list.type}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="col-md-3" style="text-align: right;">
-						<div class="form-control" style="border: none;">
-							<span style="padding: 3px;font-size: 20px;" class="setting-btn">
-								<a href="#" class="note-list-setting-btn" style="text-decoration:none !important;color: rgba(226, 71, 21, 0.5);font-weight: 600;">설정</a>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="noteList"></div>
-			<div style="text-align: center;padding-top: 30px;">
-				<ul class="pagination" style="font-size: 20px;"></ul>
-			</div>
-		</div>
-		<div class="main-content note-view-div" style="display: none;">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- BASIC INPUT -->
-					<div style="padding-top: 30px;padding-bottom: 40px;">
-						<div class="widget-content" style="text-align: center;">
-							<div style="text-align: right;height: 50px;">
-								<input type="hidden" class="note-view-seq" value="">
-								<span style="padding: 3px;font-size: 16px;" class="note-view-back-btn">
-									<a href="#" class="note-view-menu-btn" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
-								</span>
-								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="">
-									<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">수정</a>
-								</span>
-								<span style="padding: 3px;color: #bbb;font-size: 16px;" class="note-view-delete">
-									<a href="#" class="note-view-delete-btn" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">삭제</a>
-								</span>
-							</div>
-							<h4 style="color: #398439; font-weight: 600;" class="note-view-category"></h4>
-							<h1 style="font-weight: 600;padding-bottom: 10px;" class="note-view-title"></h1>
-							<span class="timestamp note-view-date" style="color:#bbb"></span>
-						</div>
-					</div>
-					<div style="border-bottom:1px solid #ddd"></div>
-					<div style="padding-top: 40px;padding-bottom: 40px;">
-						<div class="widget-content">
-							<div class="note-view-contents" style="line-height: 2;"></div>
-						</div>
-					</div>
-					<div style="border-bottom:1px solid #ddd"></div>
-				</div>
-			</div>
-		</div>
+		<!-- 메인화면 시작 -->
+		<jsp:include page="/WEB-INF/views/note/noteList.jsp" flush="true"></jsp:include>
+		<!-- 메인화면 끝 -->
+		
+		<!-- 상세화면 시작 -->
+		<jsp:include page="/WEB-INF/views/note/noteView.jsp" flush="true"></jsp:include>
+		<!-- 상세화면 끝 -->
+		
+		<!-- 등록화면 시작 -->
+		<jsp:include page="/WEB-INF/views/note/noteRegister.jsp" flush="true"></jsp:include>
+		<!-- 등록화면 끝 -->
 	</div>
 </div>
 <!-- END CONTENT WRAPPER -->
@@ -79,7 +26,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Category settings</h4>
+				<h4 class="modal-title" id="myModalLabel">카테고리 설정</h4>
 			</div>
 			<div class="modal-body category-modal-body">
 				<div class="row">
@@ -90,31 +37,35 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onClick="settingsRefresh();"><i class="fa fa-refresh"></i> Refresh</button>
-				<button type="button" class="btn btn-custom-primary" onClick="settingsSave();"><i class="fa fa-check-circle"></i> Save changes</button>
-				<button type="button" class="btn btn-default setting-modal" data-dismiss="modal"><i class="fa fa-times-circle"></i> Close</button>
+				<button type="button" class="btn btn-success" onClick="categoryReload();"><i class="fa fa-refresh"></i> 초기화</button>
+				<button type="button" class="btn btn-custom-primary" onClick="settingsSave();"><i class="fa fa-check-circle"></i> 저장</button>
+				<button type="button" class="btn btn-default setting-modal" data-dismiss="modal"><i class="fa fa-times-circle"></i> 닫기</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<form id="registerForm" name="registerForm" method="post" action="/note/register">
+<!-- 메인화면 이동 -->
+<form id="mainForm" name="mainForm" method="post" action="/note/main">
 </form>
 
-<form id="submitForm" name="submitForm" method="post" action="">
-	<input type="hidden" id="page" name="page" value="${noteList.getNumber()}">
-	<input type="hidden" id="size" name="size" value="${noteList.getSize()}">
-</form>
+<input type="hidden" id="page" name="page" value="${noteList.getNumber()}">
+<input type="hidden" id="size" name="size" value="${noteList.getSize()}">
+<input type="hidden" id="category" name="category" value="ALL">
 
 <script>
     $(document).ready(function(){
-    	pagingClick();
+    	//페이징 처리
+    	init();
+    	
+    	//설정버튼 클릭
     	$(".setting-btn").on('click', function(e) {
     		e.preventDefault();
-    		settingsRefresh();
+    		categoryReload();
     		$(".setting-modal-btn").click();
     	});
     	
+    	//카테고리 설정 화면에서 +버튼 눌렀을 시 카테고리 추가
     	addCategory = function() {
     		$("#newCategory").val($("#newCategory").val());
     		if($("#newCategory").val().length > 0) {
@@ -130,7 +81,8 @@
     		}
     	};
     	
-    	categorySettings = function() {
+    	//카테고리 리스트 다시 불러오기
+    	categoryReload = function() {
     		$.ajax({
                 url: '/note/selectNoteCategory',
                 type: 'GET',
@@ -157,6 +109,7 @@
     		});
     	}
     	
+    	//카테고리 설정 변경 저장
     	settingsSave = function() {
 			var categoryArr = [];
     		$(".setting-contents").children(".input-group-appendable").each(function(){
@@ -176,31 +129,21 @@
                 type: 'POST',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (result) {
-                	$("#submitForm").attr("action","/note/main");
-       				$("#submitForm").submit();
+                	init(0);
+                	$(".setting-modal").click();
                 }
             });
     	}
     	
-    	settingsRefresh = function() {
-    		categorySettings();
-    	}
-    	
-    	$(".register-btn").on('click', function(e) {
-    		e.preventDefault();
-    		$("#registerForm").submit();
-    	});
-    	
+    	//카테고리 모달화면에서 바탕 클릭시 에러 메시지 제거
     	$(".category-modal-body").on('click', function(){
     		$(".category-error-message").remove();
     		$(".input-group-appendable").removeClass("has-error");
     	});
     	
-    	$(".note-view-edit-btn").on('click', function(){
-    		
-    	});
     });
 
+    //카테고리 삭제
     removeCategory = function(val){
     	if($(val).parents(".input-group-appendable").find("input").attr('id') == 'new') {
     		$(val).parents(".input-group-appendable").remove();
@@ -226,64 +169,94 @@
     	}
 	}
 	
-	pagingClick = function(page) {
+    //페이징 처리
+	init = function(page, category) {
 		$.ajax({
             url: '/note/search',
             data: {
                 "page" : (typeof page == 'undefined') ? "0" : page,
-                "size" : "10"
+                "size" : "10",
+                "category" : $("#category").val()
             },
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
-            	if(result.content.length == 0) {
-            		pagingClick((result.number-1) < 0 ? 0 : (result.number-1));
+            	var noteList = result.noteList;
+            	var categoryList = result.categoryList;
+            	
+            	var categoryStr = "";
+            	$(".category-list").empty();
+            	categoryStr += '<option value="ALL">전체</option>';
+            	for(var i = 0; i < categoryList.length; i++) {
+            		if(categoryList[i].seq == $("#category").val()) {
+            			categoryStr += '<option value="'+categoryList[i].seq+'" selected="selected">'+categoryList[i].type+'</option>';
+            		} else {
+            			categoryStr += '<option value="'+categoryList[i].seq+'">'+categoryList[i].type+'</option>';
+            		}
             	}
-        		var noteStr = "";
-        		var pagingStr = "";
-        		$(".noteList").empty();
-        		$(".pagination").empty();
-        		$("#page").val(result.number);
-        		
-        		noteStr += '<div style="border-bottom:1px solid #ddd"></div>';
-        		for(var i = 0; i < result.content.length; i++){
-        			noteStr += '<a href="#" onClick="noteView('+result.content[i].seq+')" style="text-decoration:none !important;"><div class="note-list-hover" style="padding: 8px;border-right: 1px solid white; border-left: 1px solid white;">';
-        			noteStr += '<div class="widget-content" style="padding-bottom:15px;">';
-        			noteStr += '<h3 style="font-weight: 500;color:#555 !important;padding-bottom: 10px;">'+result.content[i].title+'</h3>';
-        			noteStr += '<div style="color:#555 !important;">'+result.content[i].contents+'</div>';
-        			noteStr += '<div>';
-        			noteStr += '<span style="color: #1D92AF !important;font-weight: 500;">'+result.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+result.content[i].updatedDate+'</span>';
-        			noteStr += '</div></div></div></a><div style="border-bottom:1px solid #ddd"></div>';
-        		}
-        		$(".noteList").append(noteStr);
-        		
-        		var startPage = (result.number < 5) ? 1 : result.number-3;
-        		var endPage = (result.totalPages < result.number+6) ? result.totalPages : result.number+5;
-        		var prePage = (result.number < 5) ? 0 : result.number-5;
-        		var postPage = (result.totalPages < result.number+6) ? result.totalPages-1 : result.number+5
+            	$(".category-list").append(categoryStr);
+            	
+            	if(noteList.content.length == 0) {
+            		if(noteList.number == 0) {
+            			var pagingStr = "";
+                		$(".pagination").empty();
+                		$("#page").val(noteList.number);
+                		pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
+                		pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
+                		$(".pagination").append(pagingStr);
+                		$(".noteList").empty();
+                		$(".pagination").empty();
+            		} else {
+                		init((noteList.number-1) < 0 ? 0 : (noteList.number-1));
+            		}
+            	} else {
+            		var noteStr = "";
+            		var pagingStr = "";
+            		$(".noteList").empty();
+            		$(".pagination").empty();
+            		$("#page").val(noteList.number);
+            		
+            		noteStr += '<div style="border-bottom:1px solid #ddd"></div>';
+            		for(var i = 0; i < noteList.content.length; i++){
+            			noteStr += '<a href="javascript:void(0);" onClick="noteView('+noteList.content[i].seq+')" style="text-decoration:none !important;"><div class="note-list-hover" style="padding: 8px;border-right: 1px solid white; border-left: 1px solid white;">';
+            			noteStr += '<div class="widget-content" style="padding-bottom:15px;">';
+            			noteStr += '<h3 style="font-weight: 500;color:#555 !important;padding-bottom: 10px;">'+noteList.content[i].title+'</h3>';
+            			/* noteStr += '<div style="color:#555 !important;">'+noteList.content[i].contents+'</div>'; */
+            			noteStr += '<div>';
+            			noteStr += '<span style="color: #1D92AF !important;font-weight: 500;">'+noteList.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+noteList.content[i].updatedDate+'</span>';
+            			noteStr += '</div></div></div></a><div style="border-bottom:1px solid #ddd"></div>';
+            		}
+            		$(".noteList").append(noteStr);
+            		
+            		var startPage = (noteList.number < 5) ? 1 : noteList.number-3;
+            		var endPage = (noteList.totalPages < noteList.number+6) ? noteList.totalPages : noteList.number+5;
+            		var prePage = (noteList.number < 5) ? 0 : noteList.number-5;
+            		var postPage = (noteList.totalPages < noteList.number+6) ? noteList.totalPages-1 : noteList.number+5
 
-    			if(result.first == true) {
-    				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
-    			} else {
-    				pagingStr += '<li><a href="#" onClick="pagingClick('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
-    			}
-        		for(var i = startPage; i < endPage+1; i++) {
-        			if(i == result.number+1) {
-        				pagingStr += '<li class="active"><a href="#" onClick="return false">'+(i)+'</a></li>';
+        			if(noteList.first == true) {
+        				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-left"></i></a></li>';
         			} else {
-        				pagingStr += '<li><a href="#" onClick="pagingClick('+(i-1)+');">'+(i)+'</a></li>';
+        				pagingStr += '<li><a href="#" onClick="init('+prePage+');"><i class="fa fa-chevron-left"></i></a></li>';
         			}
-        		}
-        		if(result.last == true) {
-    				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
-    			} else {
-    				pagingStr += '<li><a href="#" onClick="pagingClick('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
-    			}
-        		$(".pagination").append(pagingStr);
+            		for(var i = startPage; i < endPage+1; i++) {
+            			if(i == noteList.number+1) {
+            				pagingStr += '<li class="active"><a href="#" onClick="return false">'+(i)+'</a></li>';
+            			} else {
+            				pagingStr += '<li><a href="#" onClick="init('+(i-1)+');">'+(i)+'</a></li>';
+            			}
+            		}
+            		if(noteList.last == true) {
+        				pagingStr += '<li class="disabled"><a href="#" onClick="return false"><i class="fa fa-chevron-right"></i></a></li>';
+        			} else {
+        				pagingStr += '<li><a href="#" onClick="init('+postPage+');"><i class="fa fa-chevron-right"></i></a></li>';
+        			}
+            		$(".pagination").append(pagingStr);
+            	}
             }
         });
 	}
 	
+    //노트 상세화면 보기
 	noteView = function(seq){
 		$.ajax({
             url: '/note/selectNote',
@@ -293,36 +266,131 @@
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
-            	$(".note-view-seq").val(result.seq);
-            	$(".note-view-category").text(result.noteCategory.type);
-            	$(".note-view-title").text(result.title);
-            	$(".note-view-date").text(result.updatedDate);
-            	$(".note-view-contents").html(result.contents);
+            	$("#seq").val(result.note.seq);
+            	$(".note-view-category").text(result.note.noteCategory.type);
+            	$(".note-view-title").text(result.note.title);
+            	$(".note-view-date").text(result.note.updatedDate);
+            	$(".note-view-contents").html(result.note.contents);
         		$(".note-list-div").css("display","none");
         		$(".note-view-div").css("display","block");
+        		$(".note-register-div").css("display","none");
             }
 		});
 	}
 	
-	$(".note-view-back-btn").on('click', function(){
-		$(".note-list-div").css("display","block");
-		$(".note-view-div").css("display","none");
-	});
+    //메인화면 이동
+    main = function(){
+    	$("#mainForm").submit();
+    }
 	
+    //노트 삭제
 	$(".note-view-delete").on('click', function(){
 		$.ajax({
             url: '/note/deleteNote',
             data: {
-                "seq" : $(".note-view-seq").val(),
+                "seq" : $("#seq").val(),
                 "page" : $("#page").val()
             },
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (result) {
-            	pagingClick(result);
-            	$(".note-view-back-btn").click();
+            	init(result);
+            	$(".note-list-div").css("display","block");
+        		$(".note-view-div").css("display","none");
+        		$(".note-register-div").css("display","none");
             }
 		});
 	});
-
+    
+    //글쓰기 버튼 클릭
+    $(".register-btn").on('click', function(){
+    	$("#seq").val("");
+    	$("#title").val("");
+    	$("#select2 option:eq(0)").prop("selected", true);
+    	Editor.modify({content:" ", attachments:[]});
+    	$("#tx_attach_div").css("display","none");
+    	$(".note-list-div").css("display","none");
+		$(".note-view-div").css("display","none");
+		$(".note-register-div").css("display","block");
+		$(".register-mode").css("display","block");
+		$(".update-mode").css("display","none");
+    });
+    
+    //액션없이 메인버튼 눌렀을 때
+    $('.main-back').on('click', function(){
+    	$(".note-list-div").css("display","block");
+		$(".note-view-div").css("display","none");
+		$(".note-register-div").css("display","none");
+    });
+    
+    //노트 수정화면 이동
+    $(".note-update").on('click', function() {
+    	$.ajax({
+            url: '/note/selectNote',
+            data: {
+                "seq" : $("#seq").val()
+            },
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (result) {
+            	$("#title").val(result.note.title);
+            	$(".category-list").val(result.note.noteCategory.seq);
+            	$("#contents_source").val(result.note.contents);
+            	var attachments = {};
+            	attachments['image'] = [];
+            	attachments['file'] = [];
+            	
+            	for(var i = 0; i < result.fileList.length; i++) {
+            		if(result.fileList[i].contentType.split("/")[0] == "image") {
+            			attachments['image'].push({
+                    		'attacher': 'image',
+                    		'data': {
+                    			'imageurl': result.fileList[i].fileUrl,
+                    			'filename': result.fileList[i].fileName,
+                    			'filesize': result.fileList[i].fileSize,
+                    			'originalurl': result.fileList[i].filePath,
+                    			'thumburl': result.fileList[i].filePath
+                    		}
+                    	});	
+            		} else {
+            			attachments['file'].push({
+                    		'attacher': 'file',
+                    		'data': {
+                    			'attachurl': result.fileList[i].fileUrl,
+                    			'filemime': result.fileList[i].contentType,
+                    			'filename': result.fileList[i].fileName,
+                    			'filesize': result.fileList[i].fileSize
+                    		}
+                    	});	
+            		}
+            	}
+            	/* 저장된 컨텐츠를 불러오기 위한 함수 호출 */
+            	Editor.modify({
+            		"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
+            			var allattachments = [];
+            			for (var i in attachments) {
+            				allattachments = allattachments.concat(attachments[i]);
+            			}
+            			return allattachments;
+            		}(),
+            		"content": document.getElementById("contents_source") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+            	});
+            	$(".note-list-div").css("display","none");
+        		$(".note-view-div").css("display","none");
+        		$(".note-register-div").css("display","block");
+        		$(".register-mode").css("display","none");
+        		$(".update-mode").css("display","block");
+            }
+    	});
+    });
+    
+    $(".view-back").on('click', function(){
+    	var seq = $("#seq").val();
+    	noteView(seq);
+    });
+    
+    $(".category-list").on('change', function(){
+    	$("#category").val($(this).val());
+    	init(0);
+    });
 </script>
