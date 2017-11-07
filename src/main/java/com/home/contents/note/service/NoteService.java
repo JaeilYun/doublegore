@@ -2,6 +2,7 @@ package com.home.contents.note.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -50,8 +51,13 @@ public class NoteService {
         return noteCategoryRepository.findOne(seq);
     }
 
-    public Page<NoteEntity> findNoteAll(PageRequest request) {
-        return noteRepository.findByIsDeleted("F", request);
+    public Page<NoteEntity> findNoteAll(PageRequest request, String categorySeq) {
+    	if(categorySeq.equals("ALL")) {
+    		return noteRepository.findByIsDeleted("F", request);
+    	} else {
+    		NoteCategoryEntity category = noteCategoryRepository.findOne(Long.parseLong(categorySeq));
+    		return noteRepository.findByIsDeletedAndNoteCategory("F", category, request);
+    	}
     }
     
     public List<NoteEntity> findByNoteCategory(NoteCategoryEntity entity) {
@@ -67,7 +73,19 @@ public class NoteService {
     }
     
     public void deleteNote(Long seq) {
-    	noteRepository.delete(seq);
+    	NoteEntity note = this.findNote(seq);
+    	List<NoteFileEntity> fileList = noteFileRepository.findByNoteEntity(note);
+    	for(NoteFileEntity file : fileList) {
+    		//파일 삭제
+    		String s = file.getFilePath();
+    	    File f = new File(s);
+    	    if (f.exists()) {
+    	    	f.delete();
+    	    }
+			noteFileRepository.delete(file);
+    	}
+    	
+    	noteRepository.delete(note);
     }
     
     public List<NoteCategoryForm> findNoteCategoryFormList() {
@@ -117,40 +135,20 @@ public class NoteService {
     	//노트파일 중 note_seq없는것 삭제
     	List<NoteFileEntity> deleteNoteFileList = noteFileRepository.findByNoteEntityIsNull();
     	for(NoteFileEntity noteFile : deleteNoteFileList) {
-    		//파일 삭제
-    		String s = noteFile.getFilePath();
-    	    File f = new File(s);
-    	    if (f.exists()) {
-    	    	f.delete();
-    	    }
-    	    //DB삭제
-    		noteFileRepository.delete(noteFile);
+    		noteFileDelete(noteFile);
     	}
     }
     
     public void updateNoteFile(NoteEntity note, NoteForm form) {
     	//기존 파일 삭제
     	List<NoteFileEntity> deleteFileList = noteFileRepository.findByNoteEntity(note);
-    	noteFileRepository.delete(deleteFileList);
-    	
-    	//노트파일에 note_seq 추가
-    	List<NoteFileEntity> noteFileList = noteFileRepository.findByFileNameIn(form.getAttachImage());
-    	for(NoteFileEntity noteFile : noteFileList) {
-    		noteFile.setNoteEntity(note);
-    	}
-    	
-    	//노트파일 중 note_seq없는것 삭제
-    	List<NoteFileEntity> deleteNoteFileList = noteFileRepository.findByNoteEntityIsNull();
-    	for(NoteFileEntity noteFile : deleteNoteFileList) {
-    		//파일 삭제
-    		String s = noteFile.getFilePath();
-    	    File f = new File(s);
-    	    if (f.exists()) {
-    	    	f.delete();
-    	    }
-    	    //DB삭제
-    		noteFileRepository.delete(noteFile);
-    	}
+    	List<String> updateForm = Arrays.asList(form.getAttachImage());
+		for(NoteFileEntity file : deleteFileList) {
+			if(!updateForm.contains(file.getFileName())) {
+				noteFileDelete(file);
+			}
+		}
+		this.insertNoteFile(note, form);
     }
     
     public List<NoteCategoryEntity> updateCategory(List<String> arr) {
@@ -191,6 +189,17 @@ public class NoteService {
 			}
     	}
 		return result;
+	}
+	
+	public void noteFileDelete(NoteFileEntity noteFile) {
+		//파일 삭제
+		String s = noteFile.getFilePath();
+	    File f = new File(s);
+	    if (f.exists()) {
+	    	f.delete();
+	    }
+	    //DB삭제
+		noteFileRepository.delete(noteFile);
 	}
 
     //게시글 첨부파일 저장

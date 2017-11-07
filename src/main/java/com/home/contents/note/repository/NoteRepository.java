@@ -13,5 +13,6 @@ import com.home.contents.note.entity.NoteEntity;
 @Repository
 public interface NoteRepository extends JpaRepository<NoteEntity, Long> {
 	Page<NoteEntity> findByIsDeleted(String status, Pageable pageable);
+	Page<NoteEntity> findByIsDeletedAndNoteCategory(String status, NoteCategoryEntity category, Pageable pageable);
 	List<NoteEntity> findByNoteCategory(NoteCategoryEntity entity);
 }
