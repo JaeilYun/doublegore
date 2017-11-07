@@ -26,7 +26,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Category settings</h4>
+				<h4 class="modal-title" id="myModalLabel">카테고리 설정</h4>
 			</div>
 			<div class="modal-body category-modal-body">
 				<div class="row">
@@ -37,9 +37,9 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" onClick="categoryReload();"><i class="fa fa-refresh"></i> Refresh</button>
-				<button type="button" class="btn btn-custom-primary" onClick="settingsSave();"><i class="fa fa-check-circle"></i> Save changes</button>
-				<button type="button" class="btn btn-default setting-modal" data-dismiss="modal"><i class="fa fa-times-circle"></i> Close</button>
+				<button type="button" class="btn btn-success" onClick="categoryReload();"><i class="fa fa-refresh"></i> 초기화</button>
+				<button type="button" class="btn btn-custom-primary" onClick="settingsSave();"><i class="fa fa-check-circle"></i> 저장</button>
+				<button type="button" class="btn btn-default setting-modal" data-dismiss="modal"><i class="fa fa-times-circle"></i> 닫기</button>
 			</div>
 		</div>
 	</div>

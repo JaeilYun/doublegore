@@ -34,13 +34,13 @@
 						<input type="hidden" id="seq" name="seq" value="">
 						<div class="form-horizontal" style="padding-bottom: 30px;">
 							<div class="form-group">
-								<label class="col-md-1 control-label">Title</label>
+								<label class="col-md-1 control-label">제목</label>
 								<div class="col-md-11">
-									<input type="text" id="title" name="title" class="form-control" placeholder="Title">
+									<input type="text" id="title" name="title" class="form-control" placeholder="제목">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-1 control-label">Category</label>
+								<label class="col-md-1 control-label">카테고리</label>
 								<div class="col-md-11">
 									<select name="select" id="select2" class="form-control category-list"></select>
 								</div>
