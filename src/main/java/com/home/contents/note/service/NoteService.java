@@ -127,7 +127,7 @@ public class NoteService {
     
     public void insertNoteFile(NoteEntity note, NoteForm form) {
     	//노트파일에 note_seq 추가
-    	List<NoteFileEntity> noteFileList = noteFileRepository.findByFileNameIn(form.getAttachImage());
+    	List<NoteFileEntity> noteFileList = noteFileRepository.findByFileNameIn(form.getAttach());
     	for(NoteFileEntity noteFile : noteFileList) {
     		noteFile.setNoteEntity(note);
     	}
@@ -142,7 +142,7 @@ public class NoteService {
     public void updateNoteFile(NoteEntity note, NoteForm form) {
     	//기존 파일 삭제
     	List<NoteFileEntity> deleteFileList = noteFileRepository.findByNoteEntity(note);
-    	List<String> updateForm = Arrays.asList(form.getAttachImage());
+    	List<String> updateForm = Arrays.asList(form.getAttach());
 		for(NoteFileEntity file : deleteFileList) {
 			if(!updateForm.contains(file.getFileName())) {
 				noteFileDelete(file);
@@ -203,7 +203,7 @@ public class NoteService {
 	}
 
     //게시글 첨부파일 저장
-    public HashMap<String, Object> insertFile(MultipartFile multipartFile) {
+    public HashMap<String, Object> insertFile(MultipartFile multipartFile, String type) {
         logger.debug("Inserting File - insertFile({})");
 
         HashMap<String, Object> fileInfo = new HashMap<String, Object>(); // CallBack할 때 이미지 정보를 담을 Map 
@@ -215,20 +215,29 @@ public class NoteService {
 		String genId = UUID.randomUUID().toString().replace("-", "");
 		String fileName = genId + "." + originalNameExtension;
         try {
+        	long limitFileSize = 5*1024*1024; // 5MB
         	// 업로드 파일이 존재하면 
-    		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) { 
+    		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) {
+    			long fileSize = multipartFile.getSize();
+    			if(type.equals("image")) {
+    				if( !( (originalNameExtension.equals("jpg")) || 
+        					(originalNameExtension.equals("jpeg")) || 
+        					(originalNameExtension.equals("gif")) || 
+        					(originalNameExtension.equals("png")) || 
+        					(originalNameExtension.equals("bmp")) ) ){ 
+        				fileInfo.put("result", -1); // 허용 확장자가 아닐 경우 
+        				return fileInfo;
+        			} 
+    			} else {
+    				if(limitFileSize < fileSize){ // 제한보다 파일크기가 클 경우 
+    					fileInfo.put("result", -1); 
+    					return fileInfo; 
+    				}
+    			}
     			
-    			if( !( (originalNameExtension.equals("jpg")) || 
-    					(originalNameExtension.equals("jpeg")) || 
-    					(originalNameExtension.equals("gif")) || 
-    					(originalNameExtension.equals("png")) || 
-    					(originalNameExtension.equals("bmp")) ) ){ 
-    				fileInfo.put("result", -1); // 허용 확장자가 아닐 경우 
-    				return fileInfo;
-    			} 
 
     	        String uploadPath = environment.getRequiredProperty("app.home") + environment.getRequiredProperty("note.file.path");
-    	        String saveFilePath = FileUtils.fileSave(uploadPath, multipartFile, genId, "image");
+    	        String saveFilePath = FileUtils.fileSave(uploadPath, multipartFile, genId, type);
 
     	        Date date = new Date();
     	        NoteFileEntity file = new NoteFileEntity();
@@ -244,14 +253,23 @@ public class NoteService {
     	        file = noteFileRepository.save(file);
     			
     			// CallBack - Map에 담기 
-    			String imageurl = environment.getRequiredProperty("note.file.path") + File.separator + "image" +File.separator + fileName; // separator와는 다름! 
-    			fileInfo.put("imageurl", imageurl); // 상대파일경로(사이즈변환이나 변형된 파일) 
-    			fileInfo.put("filename", fileName); // 파일명 
-    			fileInfo.put("filesize", multipartFile.getSize()); // 파일사이즈
-    			fileInfo.put("imagealign", "C"); // 이미지정렬(C:center) 
-    			fileInfo.put("originalurl", imageurl); // 실제파일경로 
-    			fileInfo.put("thumburl", imageurl); // 썸네일파일경로(사이즈변환이나 변형된 파일) 
-    			fileInfo.put("result", 1); // -1, -2를 제외한 아무거나 싣어도 됨 
+    			String fileUrl = environment.getRequiredProperty("note.file.path") + File.separator + type +File.separator + fileName; // separator와는 다름! 
+    			if(type.equals("image")) {
+    				fileInfo.put("imageurl", fileUrl); // 상대파일경로(사이즈변환이나 변형된 파일) 
+        			fileInfo.put("filename", fileName); // 파일명 
+        			fileInfo.put("filesize", fileSize); // 파일사이즈
+        			fileInfo.put("imagealign", "C"); // 이미지정렬(C:center) 
+        			fileInfo.put("originalurl", fileUrl); // 실제파일경로 
+        			fileInfo.put("thumburl", fileUrl); // 썸네일파일경로(사이즈변환이나 변형된 파일) 
+        			fileInfo.put("result", 1); // -1, -2를 제외한 아무거나 싣어도 됨 
+    			} else {
+    				fileInfo.put("attachurl", fileUrl); // 상대파일경로(사이즈변환이나 변형된 파일) 
+    				fileInfo.put("filemime", multipartFile.getContentType()); // mime 
+    				fileInfo.put("filename", fileName); // 파일명 
+    				fileInfo.put("filesize", multipartFile.getSize()); // 파일사이즈 
+    				fileInfo.put("result", 1); // -1을 제외한 아무거나 싣어도 됨
+    			}
+    			
     		} else {
     			throw new Exception("Failed to store empty file " + fileName);
     		}

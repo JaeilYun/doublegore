@@ -5,26 +5,34 @@
 	<div class="row">
 		<div class="col-md-12">
 			<!-- BASIC INPUT -->
-			<div style="padding-top: 30px;">
+			<div style="padding-top: 26px;">
 				<div class="widget-content" style="text-align: center;">
-					<div style="text-align: right;height: 50px;" class="register-mode">
-						<span style="padding: 3px;font-size: 16px;">
-							<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
-						</span>
-						<span style="padding: 3px;color: #bbb;font-size: 16px;">
-							<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">저장</a>
-						</span>
+					<div style="height: 50px;" class="register-mode">
+						<div class="col-md-6" style="text-align: left;">
+							<span style="padding: 3px;font-size: 20px;">
+								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+							</span>
+						</div>
+						<div class="col-md-6" style="text-align: right;">
+							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+								<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">저장</a>
+							</span>
+						</div>
 					</div>
 					<div style="text-align: right;height: 50px;" class="update-mode">
-						<span style="padding: 3px;font-size: 16px;">
-							<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
-						</span>
-						<span style="padding: 3px;color: #bbb;font-size: 16px;">
-							<a href="#" class="note-view-delete-btn view-back" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">뒤로</a>
-						</span>
-						<span style="padding: 3px;color: #bbb;font-size: 16px;">
-							<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">완료</a>
-						</span>
+						<div class="col-md-6" style="text-align: left;">
+							<span style="padding: 3px;font-size: 20px;">
+								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
+							</span>
+						</div>
+						<div class="col-md-6" style="text-align: right;">
+							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+								<a href="#" class="note-view-delete-btn view-back" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">뒤로</a>
+							</span>
+							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+								<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">완료</a>
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -103,6 +111,10 @@ $(document).ready(function() {
 				image:{ 
 					features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
 					popPageUrl:'/note/imagePopup' //팝업창 주소
+				},
+				file:{ 
+					features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
+					popPageUrl:'/note/filePopup' //팝업창 주소
 				}
 			},
 			
@@ -163,20 +175,20 @@ function setForm(editor) {
             //alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
             input = document.createElement('input');
             input.type = 'hidden';
-            input.name = 'attachImage';
+            input.name = 'attach';
             input.value = images[i].data.filename;  // 예에서는 이미지경로만 받아서 사용
             form.createField(input);
         }
     }
 
-    /* var files = editor.getAttachments('file');
+    var files = editor.getAttachments('file');
     for (i = 0; i < files.length; i++) {
         input = document.createElement('input');
         input.type = 'hidden';
-        input.name = 'attach_file';
-        input.value = files[i].data.attachurl;
+        input.name = 'attach';
+        input.value = files[i].data.filename;
         form.createField(input);
-    } */
+    }
     Editor.modify({content:" ", attachments:[]});
     return true;
 }

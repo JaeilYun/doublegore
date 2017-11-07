@@ -221,7 +221,7 @@
             			noteStr += '<a href="javascript:void(0);" onClick="noteView('+noteList.content[i].seq+')" style="text-decoration:none !important;"><div class="note-list-hover" style="padding: 8px;border-right: 1px solid white; border-left: 1px solid white;">';
             			noteStr += '<div class="widget-content" style="padding-bottom:15px;">';
             			noteStr += '<h3 style="font-weight: 500;color:#555 !important;padding-bottom: 10px;">'+noteList.content[i].title+'</h3>';
-            			noteStr += '<div style="color:#555 !important;">'+noteList.content[i].contents+'</div>';
+            			/* noteStr += '<div style="color:#555 !important;">'+noteList.content[i].contents+'</div>'; */
             			noteStr += '<div>';
             			noteStr += '<span style="color: #1D92AF !important;font-weight: 500;">'+noteList.content[i].noteCategory.type+'</span><span class="timestamp pull-right" style="color: #bbb;">'+noteList.content[i].updatedDate+'</span>';
             			noteStr += '</div></div></div></a><div style="border-bottom:1px solid #ddd"></div>';
@@ -338,30 +338,32 @@
             	$("#contents_source").val(result.note.contents);
             	var attachments = {};
             	attachments['image'] = [];
+            	attachments['file'] = [];
             	
             	for(var i = 0; i < result.fileList.length; i++) {
-            		attachments['image'].push({
-                		'attacher': 'image',
-                		'data': {
-                			'imageurl': result.fileList[i].fileUrl,
-                			'filename': result.fileList[i].fileName,
-                			'filesize': result.fileList[i].fileSize,
-                			'originalurl': result.fileList[i].filePath,
-                			'thumburl': result.fileList[i].filePath
-                		}
-                	});
-            	}
-            	
-            	/* attachments['file'] = [];
-            	attachments['file'].push({
-            		'attacher': 'file',
-            		'data': {
-            			'attachurl': 'http://cfile297.uf.daum.net/attach/207C8C1B4AA4F5DC01A644',
-            			'filemime': 'image/gif',
-            			'filename': 'editor_bi.gif',
-            			'filesize': 640
+            		if(result.fileList[i].contentType.split("/")[0] == "image") {
+            			attachments['image'].push({
+                    		'attacher': 'image',
+                    		'data': {
+                    			'imageurl': result.fileList[i].fileUrl,
+                    			'filename': result.fileList[i].fileName,
+                    			'filesize': result.fileList[i].fileSize,
+                    			'originalurl': result.fileList[i].filePath,
+                    			'thumburl': result.fileList[i].filePath
+                    		}
+                    	});	
+            		} else {
+            			attachments['file'].push({
+                    		'attacher': 'file',
+                    		'data': {
+                    			'attachurl': result.fileList[i].fileUrl,
+                    			'filemime': result.fileList[i].contentType,
+                    			'filename': result.fileList[i].fileName,
+                    			'filesize': result.fileList[i].fileSize
+                    		}
+                    	});	
             		}
-            	}); */
+            	}
             	/* 저장된 컨텐츠를 불러오기 위한 함수 호출 */
             	Editor.modify({
             		"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */

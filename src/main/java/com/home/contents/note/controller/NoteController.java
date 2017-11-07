@@ -109,15 +109,15 @@ public class NoteController {
 	@RequestMapping(value = "/insertNote")
 	public String insertNote(NoteForm form) {
 		log.debug("[NoteController] insertNote()");
-
+		
 		if(form.getSeq() == null) {
 			NoteEntity note = noteService.insertNote(form);
-			if(form.getAttachImage() != null && form.getAttachImage().length > 0) {
+			if(form.getAttach() != null && form.getAttach().length > 0) {
 				noteService.insertNoteFile(note, form);
 			}
 		} else {
 			NoteEntity note = noteService.updateNote(form);
-			if(form.getAttachImage() != null && form.getAttachImage().length > 0) {
+			if(form.getAttach() != null && form.getAttach().length > 0) {
 				noteService.updateNoteFile(note, form);
 			}
 		}
@@ -134,12 +134,30 @@ public class NoteController {
 		return mav;
 	}
 	
+	//파일 팝업창 띄우기
+	@RequestMapping(value = "/filePopup")
+	public ModelAndView filePopup() {
+		log.debug("[NoteController] filePopup()");
+
+		ModelAndView mav = new ModelAndView("note/file/popup");	
+		return mav;
+	}
+	
 	//노트 이미지 저장
 	@RequestMapping(value = "/imageUpload")
 	public @ResponseBody HashMap<String, Object> imageUpload(@RequestParam("Filedata") MultipartFile multipartFile, HttpSession httpSession) {
-		log.debug("[NoteController] imagePopup()");
+		log.debug("[NoteController] imageUpload()");
 		
-		HashMap<String, Object> fileInfo = noteService.insertFile(multipartFile);
+		HashMap<String, Object> fileInfo = noteService.insertFile(multipartFile, "image");
+		return fileInfo; // @ResponseBody 어노테이션을 사용하여 Map을 JSON형태로 반환
+	}
+	
+	//노트 파일 저장
+	@RequestMapping(value = "/fileUpload")
+	public @ResponseBody HashMap<String, Object> fileUpload(@RequestParam("Filedata") MultipartFile multipartFile, HttpSession httpSession) {
+		log.debug("[NoteController] fileUpload()");
+		
+		HashMap<String, Object> fileInfo = noteService.insertFile(multipartFile, "file");
 		return fileInfo; // @ResponseBody 어노테이션을 사용하여 Map을 JSON형태로 반환
 	}
 	

@@ -12,5 +12,5 @@ public class NoteForm {
 	String title;
 	Long select;
 	String content;
-	String[] attachImage;
+	String[] attach;
 }
