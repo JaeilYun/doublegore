@@ -4,6 +4,7 @@
 <div class="col-lg-3"></div>
 <div id="main-content-wrapper" class="col-lg-6">
 	<div class="content">
+	
 		<!-- 메인화면 시작 -->
 		<jsp:include page="/WEB-INF/views/note/noteList.jsp" flush="true"></jsp:include>
 		<!-- 메인화면 끝 -->

@@ -12,9 +12,6 @@
 
 <%--Profile--%>
 
-<%--email--%>
-<script src="${contextRoot}/assets/js/king-page.js"></script>
-
 
 <%--Note--%>
 <script src="${contextRoot}/assets/js/plugins/markdown/markdown.js"></script>
@@ -56,3 +53,7 @@
 <script src="${contextRoot}/assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src="${contextRoot}/assets/js/king-components.js"></script>
 
+
+
+<%--email--%>
+<script src="${contextRoot}/assets/js/king-page.js"></script>

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	// if form elements page
-	if( $('body').hasClass('forms-elements') ) {
+	if( $('body').hasClass('forms-elements') || $('div').hasClass('forms-elements') ) {
 
 		//*******************************************
 		/*	MASKED  INPUT

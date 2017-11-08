@@ -4,24 +4,35 @@
 <script src="${contextRoot}/assets/js/popup.js"></script>
 <script src="${contextRoot}/assets/js/jquery.form.min.js"></script>
 
-<div class="wrapper">
+<div class="wrapper forms-elements">
 	<div class="header">
 		<h1>사진 첨부</h1>
 	</div>	
 	<div class="body">
 		<dl class="alert">
 	    	<dt>&nbsp;10MB이하 (JPG,GIF,PNG,BMP)</dt> 
-	    	<dd> <form id="daumOpenEditorForm" encType="multipart/form-data" method="post" action=""> 
-	    	
-	    		<!-- 파일첨부 --> 
-	    		<div class="file"> 
-	    			<input disabled class="file-text"> 
-	    			<label class="file-btn" for="uploadInputBox">사진첨부</label> 
-	    			<input id="uploadInputBox" style="display: none;" type="file" name="Filedata"><!-- 버튼대체용(안보임) --> 
-	    		</div> 
-	    		<!-- //파일첨부 -->
-	    	</form> 
+	    	<dd> 
+		    	<form id="daumOpenEditorForm" encType="multipart/form-data" method="post" action=""> 
+		    	
+		    		<!-- 파일첨부 --> 
+		    		<div class="file">
+		    			<input disabled class="file-text"> 
+		    			<label class="file-btn" for="uploadInputBox">사진첨부</label>
+		    			<input id="uploadInputBox" style="display: none;" type="file" name="Filedata"><!-- 버튼대체용(안보임) --> 
+		    		</div> 
+		    		<!-- //파일첨부 -->
+		    	</form>
 	    	</dd>
+	    	<dd>
+				<div class="row">
+					<div class="col-sm-10">
+						<input type="text" class="bootstrap-slider" value="">
+					</div>
+					<div class="col-sm-2">
+						<span class="label label-warning label-slider"></span>
+					</div>
+				</div>
+			</dd>
 		</dl>
 	</div>
 	<div class="footer">
@@ -77,7 +88,7 @@ function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태
 		return; 
 	} 
 	var _mockdata = { 
-		'width': "100%",
+		'width': $(".bootstrap-slider").val(),
 		'imageurl': fileInfo.imageurl, 
 		'filename': fileInfo.filename, 
 		'filesize': fileInfo.filesize, 
