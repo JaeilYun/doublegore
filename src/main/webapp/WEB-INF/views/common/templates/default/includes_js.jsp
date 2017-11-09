@@ -53,7 +53,8 @@
 <script src="${contextRoot}/assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src="${contextRoot}/assets/js/king-components.js"></script>
 
-
+<!-- memo -->
+<script src="${contextRoot}/assets/js/plugins/stat/jquery.easypiechart.min.js"></script>
 
 <%--email--%>
 <script src="${contextRoot}/assets/js/king-page.js"></script>

@@ -23,7 +23,7 @@
 		    		<!-- //파일첨부 -->
 		    	</form>
 		    	<div style="padding: 10px;width: 250px;margin-top: -10px;">
-    				<input type="text" class="bootstrap-slider" value="">
+    				<input type="text" class="bootstrap-slider" value="500">
     			</div>
 	    	</dd>
 		</dl>

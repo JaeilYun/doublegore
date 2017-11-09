@@ -42,4 +42,7 @@
 	<definition name="note/*/popup" extends="image">
 		<put-attribute name="body" value="/WEB-INF/views/note/{1}.jsp"/>
 	</definition>
+	<definition name="memo/*" extends="default">
+		<put-attribute name="body" value="/WEB-INF/views/memo/{1}.jsp"/>
+	</definition>
 </tiles-definitions>

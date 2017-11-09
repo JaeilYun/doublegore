@@ -333,8 +333,10 @@ $(document).ready(function(){
 		});
 
 		$('.quick-note-create').focusout( function() {
-			$(this).find('textarea').attr('rows', 1);
-			$(this).find('.widget-footer').hide();
+			if($(this).find('textarea').val().length == 0) {
+				$(this).find('textarea').attr('rows', 1);
+				$(this).find('.widget-footer').hide();	
+			}
 		});
 	}
 

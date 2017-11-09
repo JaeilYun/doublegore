@@ -106,7 +106,6 @@ $(document).ready(function() {
 				show: true, 
 				confirmForDeleteAll: true 
 			},
-
 			attacher:{ 
 				image:{ 
 					features:{left:250,top:65,width:400,height:210,scrollbars:0}, //팝업창 사이즈 
@@ -117,7 +116,12 @@ $(document).ready(function() {
 					popPageUrl:'/note/filePopup' //팝업창 주소
 				}
 			},
-			
+			embeder:{
+				media:{
+					features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
+					popPageUrl:'/note/filePopup' //팝업창 주소
+				}
+			},
 			capacity: { 
 				maximum: 20*1024*1024 // 최대 첨부 용량 (5MB)
 			}
@@ -187,6 +191,15 @@ function setForm(editor) {
         input.type = 'hidden';
         input.name = 'attach';
         input.value = files[i].data.filename;
+        form.createField(input);
+    }
+    
+    var media = editor.getAttachments('media');
+    for (i = 0; i < media.length; i++) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'attach';
+        input.value = media[i].data.filename;
         form.createField(input);
     }
     Editor.modify({content:" ", attachments:[]});

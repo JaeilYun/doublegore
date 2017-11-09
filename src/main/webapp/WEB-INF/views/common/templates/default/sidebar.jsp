@@ -7,6 +7,7 @@
 			<ul class="main-menu">
 				<li class="${sessionScope.currentMenu == 'DASHBOARD' ? 'active' : '' }"><a href="${contextRoot}/dashboard/main"><i class="fa fa-tasks"></i><span class="text">Dashboard </span></a></li>
 				<li class="${sessionScope.currentMenu == 'PROFILE' ? 'active' : '' }"><a href="${contextRoot}/profile/main"><i class="fa fa-address-card"></i><span class="text">Profile </span></a></li>
+				<li class="${sessionScope.currentMenu == 'MEMO' ? 'active' : '' }"><a href="${contextRoot}/memo/main"><i class="fa fa-address-card"></i><span class="text">Memo </span></a></li>
 				<li class="${sessionScope.currentMenu == 'EMAIL' ? 'active' : '' }"><a href="${contextRoot}/email/main"><i class="fa fa-envelope"></i><span class="text">e-Mail </span></a></li>
 				<li class="${sessionScope.currentMenu == 'FILE' ? 'active' : '' }"><a href="${contextRoot}/file/main"><i class="fa fa-folder-open"></i><span class="text">File Manager </span></a></li>
 				<li class="${sessionScope.currentMenu == 'CALENDAR' ? 'active' : '' }"><a href="${contextRoot}/calendar/main"><i class="fa fa-calendar"></i><span class="text">Calendar </span></a></li>

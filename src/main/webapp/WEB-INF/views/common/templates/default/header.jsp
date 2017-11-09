@@ -10,7 +10,7 @@
       <!-- end navbar-toggle -->
       <!-- logo -->
       <div class="pull-left logo">
-        <a href="index.html"><img src="${contextRoot}/assets/img/kingadmin-logo-white.png" alt="KingAdmin - Admin Dashboard" /></a>
+        <a href="/dashboard/main"><img src="${contextRoot}/assets/img/kingadmin-logo-white.png" alt="KingAdmin - Admin Dashboard" /></a>
         <h1 class="sr-only">KingAdmin Admin Dashboard</h1>
       </div>
       <!-- end logo -->
@@ -21,6 +21,7 @@
             <ul class="dropdown-menu">
               <li><a href="${contextRoot}/dashboard/main"><i class="fa fa-tasks"></i><span class="text"> Dashboard </span></a></li>
 				<li><a href="${contextRoot}/profile/main"><i class="fa fa-address-card"></i><span class="text"> Profile </span></a></li>
+				<li><a href="${contextRoot}/memo/main"><i class="fa fa-pencil"></i><span class="text"> Memo </span></a></li>
 				<li><a href="${contextRoot}/email/main"><i class="fa fa-envelope"></i><span class="text"> e-Mail </span></a></li>
 				<li><a href="${contextRoot}/file/main"><i class="fa fa-folder-open"></i><span class="text"> File Manager </span></a></li>
 				<li><a href="${contextRoot}/calendar/main"><i class="fa fa-calendar"></i><span class="text"> Calendar </span></a></li>
@@ -28,10 +29,7 @@
             </ul>
           </li>
           <li>
-            <a href="page-inbox.html"><i class="fa fa-envelope-o"></i> Inbox <span class="badge red-bg">32</span></a>
-          </li>
-          <li>
-            <a href="index.html"><i class="fa fa-reply"></i> Back to Main Page</a>
+            <a href="page-inbox.html"><i class="fa fa-envelope-o"></i> Mail <span class="badge red-bg">32</span></a>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
