@@ -109,7 +109,7 @@ $(document).ready(function() {
 
 			attacher:{ 
 				image:{ 
-					features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
+					features:{left:250,top:65,width:400,height:210,scrollbars:0}, //팝업창 사이즈 
 					popPageUrl:'/note/imagePopup' //팝업창 주소
 				},
 				file:{ 

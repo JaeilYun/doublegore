@@ -22,17 +22,10 @@
 		    		</div> 
 		    		<!-- //파일첨부 -->
 		    	</form>
+		    	<div style="padding: 10px;width: 250px;margin-top: -10px;">
+    				<input type="text" class="bootstrap-slider" value="">
+    			</div>
 	    	</dd>
-	    	<dd>
-				<div class="row">
-					<div class="col-sm-10">
-						<input type="text" class="bootstrap-slider" value="">
-					</div>
-					<div class="col-sm-2">
-						<span class="label label-warning label-slider"></span>
-					</div>
-				</div>
-			</dd>
 		</dl>
 	</div>
 	<div class="footer">
@@ -88,7 +81,7 @@ function done(fileInfo) { // fileInfo는 Ajax 요청 후 리턴하는 JSON형태
 		return; 
 	} 
 	var _mockdata = { 
-		'width': $(".bootstrap-slider").val(),
+		'width': $(".bootstrap-slider").val()/5 +"%",
 		'imageurl': fileInfo.imageurl, 
 		'filename': fileInfo.filename, 
 		'filesize': fileInfo.filesize, 
