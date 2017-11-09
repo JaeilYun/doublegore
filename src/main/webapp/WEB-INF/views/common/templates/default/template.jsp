@@ -27,7 +27,7 @@
 
 <body class="ontop-nav topnav-fixed dashboard4" style="background: #fff !important; font-family: Noto Sans KR, sans-serif;">
 	<!-- WRAPPER -->
-	<div id="wrapper" class="wrapper" style="padding-top: 100px;">
+	<div id="wrapper" class="wrapper" style="padding-top: 60px;">
 	
 		<!-- TOP BAR -->
 		<tiles:insertAttribute name="header" />

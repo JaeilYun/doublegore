@@ -1,35 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8" session="true" %>
-<div class="row">
-	<div class="col-lg-3">
-		<div class="content col-lg-8 pull-right">
-				<div class="well" style="background-color: #f9f9f9;border: 1px solid lightgray;">
-					<div class="top-content" style="margin-bottom: 0px;">
+<div style="padding-top: 30px;">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-2">
+		<div class="content">
+			<div class="well" style="background-color: #f9f9f9;border: 1px solid lightgray;">
+				<div class="row">
+					<div class="col-md-6 top-content" style="margin-bottom: 0px;">
 						<ul class="list-inline mini-stat">
 							<li class="pull-left">
 								<h5 style="text-align: right;">Counts <span class="stat-value stat-color-orange nodeFileCount"> 0</span></h5>
 							</li>
+						</ul>
+					</div>
+					<div class="col-md-6 top-content" style="margin-bottom: 0px;">
+						<ul class="list-inline mini-stat">
 							<li class="pull-left">
 								<h5 style="text-align: right;">Size <span class="stat-value stat-color-blue nodeFileSize"> 0MB</span></h5>
 							</li>
 						</ul>
 					</div>
 				</div>
-			
-				<div class="well" style="margin-top: -7px;background-color: #f9f9f9;border: 1px solid lightgray;">
-					<div id="tree-file-manager" class="king-tree" style="overflow: hidden;"></div>
-				</div>
-				<div class="well prev-image" style="margin-top: -7px; padding: 7px; display: none;background-color: #f9f9f9;border: 1px solid lightgray;"">
-					<img class="prev-image-view" src="" style="width: 100%">
-				</div>
+			</div>
+		
+			<div class="well" style="margin-top: -7px;background-color: #f9f9f9;border: 1px solid lightgray;">
+				<div id="tree-file-manager" class="king-tree" style="overflow: hidden;"></div>
+			</div>
+			<div class="well prev-image" style="margin-top: -7px; padding: 7px; display: none;background-color: #f9f9f9;border: 1px solid lightgray;"">
+				<img class="prev-image-view" src="" style="width: 100%">
+			</div>
 		</div>
 	</div>
-	<div id="main-content-wrapper" class="expanded-full col-lg-6">
+	<div id="main-content-wrapper" class="col-lg-6">
 		<div class="content">
 			<div class="main-content">
 				<!-- FILE MANAGER -->
 				<div class="file-manager">
-					<div class="row" style="height: 95px;">
-						<div class="col-md-10" style="padding: 30px 0px 20px 4px;">
+					<div style="height: 95px;">
+						<div class="col-md-12" style="padding: 30px 0px 20px 4px;">
 							<button type="button" class="btn btn-default file-list-image-toggle file-top-menu-upload fileManage-top-button" disabled="disabled">
 								<i class="fa fa-upload"> Upload</i>
 							</button>
@@ -43,44 +50,45 @@
 							<button type="button" class="btn btn-default file-list-image-toggle file-top-menu-select select fileManage-top-button" disabled="disabled">
 								<i class="fa fa-square-o selectIcon"> Select</i>
 							</button>
-						</div>
-						<div class="col-md-2 pull-right" style="padding: 30px 0px 20px 0px;text-align: right;">
+							<div style="float: right">
 							<button type="button" class="btn btn-default list-view-button"
 									style="margin: -3px 0px -3px -3px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; color: #fff; background-color: #626262; border-color: #555555;">
 								<i class="fa fa-list"></i>
 							</button>
 							<button type="button" class="btn btn-default image-view-button"
-									style="margin: -3px 7px -3px -3px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; color: #333; background-color: #e6e6e6; border-color: #adadad;">
+									style="margin: -3px 1px -3px -3px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; color: #333; background-color: #e6e6e6; border-color: #adadad;">
 								<i class="fa fa-th"></i>
 							</button>
+							</div>
+						</div>
+						<!-- <div class="col-md-4" style="padding: 30px 0px 20px 0px;text-align: right;">
+							
+						</div> -->
+					</div>
+					<div class="file-list-view" style="margin-top: -20px; display: block">
+						<table id="datatable-file-manager" class="table table-sorting table-dark-header">
+							<thead>
+							<tr>
+								<th class="col-lg-6">Name</th>
+								<th class="col-lg-3">Last Modified</th>
+								<th class="col-lg-2">Type</th>
+								<th class="col-lg-1">Size</th>
+							</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<div id="contextMenuFileManager">
+							<ul class="dropdown-menu context-menu" role="menu">
+								<li><a tabindex="-1" href="#"><i class="fa fa-download"></i> Download</a></li>
+								<li><a tabindex="-1" href="#"><i class="fa fa-remove"></i> Delete</a></li>
+								<li><a tabindex="-1" href="#"><i class="fa fa-eye"></i> View</a></li>
+							</ul>
 						</div>
 					</div>
-					<div class="row">
-						<div class="file-list-view" style="margin-top: -20px; display: block">
-							<table id="datatable-file-manager" class="table table-sorting table-dark-header">
-								<thead>
-								<tr>
-									<th class="col-lg-6">Name</th>
-									<th class="col-lg-3">Last Modified</th>
-									<th class="col-lg-2">Type</th>
-									<th class="col-lg-1">Size</th>
-								</tr>
-								</thead>
-								<tbody></tbody>
-							</table>
-							<div id="contextMenuFileManager">
-								<ul class="dropdown-menu context-menu" role="menu">
-									<li><a tabindex="-1" href="#"><i class="fa fa-download"></i> Download</a></li>
-									<li><a tabindex="-1" href="#"><i class="fa fa-remove"></i> Delete</a></li>
-									<li><a tabindex="-1" href="#"><i class="fa fa-eye"></i> View</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="file-image-view" style="display: none;">
-							<div class="well demo-gallery" style="margin-top: -7px;background-color:#fff; border: none;padding: 14px;">
-								<ul id="lightgallery" class="list-unstyled row" style="margin-top: -15px;margin-bottom: -15px;">
-								</ul>
-							</div>
+					<div class="file-image-view" style="display: none;">
+						<div class="well demo-gallery" style="margin-top: -7px;background-color:#fff; border: none;padding: 14px;">
+							<ul id="lightgallery" class="list-unstyled row" style="margin-top: -15px;margin-bottom: -15px;">
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -89,7 +97,7 @@
 		</div>
 	</div>
 	<!-- END CONTENT WRAPPER -->
-	<div class="col-lg-3"></div>
+	<div class="col-lg-2"></div>
 </div>
 
 <input id="fileuploadButton" style="display: none;" type="file" name="file" multiple >

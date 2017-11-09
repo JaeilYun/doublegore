@@ -1,55 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8" session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="main-content note-register-div" style="display: none;">
+<div class="main-content note-register-div" style="display: none; padding: 10px 3px 10px 3px;">
 	<div class="row">
 		<div class="col-md-12">
 			<!-- BASIC INPUT -->
 			<div style="padding-top: 26px;">
 				<div class="widget-content" style="text-align: center;">
 					<div style="height: 50px;" class="register-mode">
-						<div class="col-md-6" style="text-align: left;">
-							<span style="padding: 3px;font-size: 20px;">
+						<div class="col-md-6" style="text-align: left; float: left">
+							<span style="padding: 3px;font-size: 18px;">
 								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
 							</span>
 						</div>
-						<div class="col-md-6" style="text-align: right;">
-							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+						<div class="col-md-6" style="text-align: right; float: right">
+							<span style="padding: 3px;color: #bbb;font-size: 18px;">
 								<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">저장</a>
 							</span>
 						</div>
 					</div>
 					<div style="text-align: right;height: 50px;" class="update-mode">
-						<div class="col-md-6" style="text-align: left;">
-							<span style="padding: 3px;font-size: 20px;">
+						<div class="col-md-6" style="text-align: left; float: left">
+							<span style="padding: 3px;font-size: 18px;">
 								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
 							</span>
 						</div>
-						<div class="col-md-6" style="text-align: right;">
-							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+						<div class="col-md-6" style="text-align: right; float: right">
+							<span style="padding: 3px;color: #bbb;font-size: 18px;">
 								<a href="#" class="note-view-delete-btn view-back" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">뒤로</a>
 							</span>
-							<span style="padding: 3px;color: #bbb;font-size: 20px;">
+							<span style="padding: 3px;color: #bbb;font-size: 18px;">
 								<a href="#" class="note-view-edit-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;" onClick="saveContent();">완료</a>
 							</span>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div style="padding-top: 40px;padding-bottom: 40px;">
+			<div style="padding-top: 26px;padding-bottom: 40px;">
 				<div class="widget-content">
 					<form name="tx_editor_form" id="tx_editor_form" action="/note/insertNote" method="post" accept-charset="utf-8">
 						<input type="hidden" id="seq" name="seq" value="">
 						<div class="form-horizontal" style="padding-bottom: 30px;">
 							<div class="form-group">
-								<label class="col-md-1 control-label">제목</label>
-								<div class="col-md-11">
+								<label class="col-md-2 control-label">제목</label>
+								<div class="col-md-10">
 									<input type="text" id="title" name="title" class="form-control" placeholder="제목">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-1 control-label">카테고리</label>
-								<div class="col-md-11">
+								<label class="col-md-2 control-label">카테고리</label>
+								<div class="col-md-10">
 									<select name="select" id="select2" class="form-control category-list"></select>
 								</div>
 							</div>
