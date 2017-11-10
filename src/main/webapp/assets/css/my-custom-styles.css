@@ -144,7 +144,9 @@
 }
 .note-list-new-btn, .note-view-edit-btn, .note-list-setting-btn, .note-view-delete-btn, .note-view-menu-btn {
 	padding: 3px 15px 3px 15px;
-	border-radius: 20px;
+	border-radius: 10px;
+	text-decoration:none !important;
+	font-weight: 600;
 }
 .note-list-new-btn:hover, .note-view-edit-btn:hover {
 	color: #4BA84B !important;
@@ -203,4 +205,3 @@
   	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(61, 179, 158, 0.6);
   	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(61, 179, 158, 0.6);
 }
-

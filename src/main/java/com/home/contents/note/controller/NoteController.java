@@ -166,7 +166,7 @@ public class NoteController {
 	public @ResponseBody Map<String, Object> search(String page, String size, String category) {
 		log.debug("[NoteController] search()");
 		
-		PageRequest request = new PageRequest(Integer.parseInt(page), Integer.parseInt(size), new Sort(Direction.DESC, "seq"));
+		PageRequest request = new PageRequest(Integer.parseInt(page), Integer.parseInt(size), new Sort(Direction.DESC, "updatedDate"));
 		Page<NoteEntity> noteList = noteService.findNoteAll(request, category);
 		List<NoteCategoryForm> categoryList = noteService.findNoteCategoryFormList();
 		

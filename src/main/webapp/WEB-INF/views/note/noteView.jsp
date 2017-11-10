@@ -10,17 +10,15 @@
 				<div class="widget-content" style="text-align: center;">
 					<div style="height: 50px;">
 						<div class="col-md-6" style="text-align: left; float: left">
-							<span style="padding: 3px;font-size: 18px;" class="note-view-back-btn">
-								<a href="#" class="note-view-menu-btn main-back" style="text-decoration:none !important;color: #bbb;font-weight: 600;">메뉴</a>
-							</span>
+							<div class="btn-group" style="float: left;">
+								<button type="button" class="btn btn-clean note-view-menu-btn main-back" style="color: #bbb;font-size: 18px;">메뉴</button>
+							</div>
 						</div>
 						<div class="col-md-6" style="text-align: right; float: right">
-							<span style="padding: 3px;color: #bbb;font-size: 18px;" class="">
-								<a href="#" class="note-view-edit-btn note-update" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">수정</a>
-							</span>
-							<span style="padding: 3px;color: #bbb;font-size: 18px;">
-								<a href="#" class="note-view-delete-btn note-view-delete" style="text-decoration:none !important;color: rgba(219, 56, 51, 0.5);font-weight: 600;">삭제</a>
-							</span>
+							<div class="btn-group" style="float: right;">
+								<button type="button" class="btn btn-clean note-view-edit-btn note-update" style="color: rgba(75, 168, 75, 0.5);font-size: 18px;">수정</button>
+								<button type="button" class=" btn btn-clean note-view-delete-btn note-view-delete" style="color: rgba(219, 56, 51, 0.5);font-size: 18px;">삭제</button>
+							</div>
 						</div>
 					</div>
 					<h4 style="color: #398439; font-weight: 600;" class="note-view-category"></h4>

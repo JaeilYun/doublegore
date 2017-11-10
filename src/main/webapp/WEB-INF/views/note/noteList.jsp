@@ -5,23 +5,19 @@
 <div class="main-content note-list-div" style="display: block;padding: 10px 3px 10px 3px;">
 	<div class="row">
 		<div class="col-md-12">
-			<div style="padding-top: 20px;padding-bottom: 60px;">
+			<div style="padding-top: 26px;padding-bottom: 60px;">
 				<div class="wedget-content" style="text-align: center;">
 					<div class="col-md-3" style="text-align: left;margin-bottom: 5px;">
-						<div class="form-control" style="border: none;">
-							<span style="padding: 3px;font-size: 18px;">
-								<a href="#" class="note-list-new-btn register-btn" style="text-decoration:none !important;color: rgba(75, 168, 75, 0.5);font-weight: 600;">글쓰기</a>
-							</span>
+						<div class="btn-group" style="float: left;">
+							<button type="button" class="btn btn-clean note-list-new-btn register-btn" style="color: rgba(75, 168, 75, 0.5);font-size: 18px;">새글</button>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<select class="form-control note-select category-list"></select>
 					</div>
 					<div class="col-md-3" style="text-align: right;">
-						<div class="form-control" style="border: none;">
-							<span style="padding: 3px;font-size: 18px;" class="setting-btn">
-								<a href="#" class="note-list-setting-btn" style="text-decoration:none !important;color: rgba(226, 71, 21, 0.5);font-weight: 600;">설정</a>
-							</span>
+						<div class="btn-group" style="float: right;">
+							<button type="button" class="btn btn-clean note-list-setting-btn setting-btn" style="color: rgba(219, 56, 51, 0.5);font-size: 18px;">설정</button>
 						</div>
 					</div>
 				</div>
