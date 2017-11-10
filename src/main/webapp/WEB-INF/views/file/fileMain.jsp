@@ -69,10 +69,10 @@
 						<table id="datatable-file-manager" class="table table-sorting table-dark-header">
 							<thead>
 							<tr>
-								<th class="col-lg-6">Name</th>
+								<th class="col-lg-5">Name</th>
 								<th class="col-lg-3">Last Modified</th>
 								<th class="col-lg-2">Type</th>
-								<th class="col-lg-1">Size</th>
+								<th class="col-lg-2">Size</th>
 							</tr>
 							</thead>
 							<tbody></tbody>
